@@ -23,15 +23,17 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build -w"
+    "dev": "rslib build -w",
+    "test": "playwright test"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.6.14",
-    "@rslib/core": "^0.18.4",
+    "@playwright/test": "^1.57.0",
+    "@rsbuild/core": "1.6.15",
+    "@rslib/core": "0.18.4",
     "@types/node": "^25.0.3",
-    "@typescript/native-preview": "^7.0.0-dev.20251223.1",
-    "prebundle": "^1.6.0",
-    "react-server-dom-rspack": "^0.0.1-alpha.3",
+    "@typescript/native-preview": "7.0.0-dev.20251223.1",
+    "prebundle": "1.6.0",
+    "react-server-dom-rspack": "0.0.1-alpha.3",
     "rsbuild-plugin-arethetypeswrong": "^0.1.1"
   },
   "peerDependencies": {

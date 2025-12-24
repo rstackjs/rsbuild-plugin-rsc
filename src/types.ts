@@ -5,14 +5,14 @@ export type PluginRSCOptions = {
         /**
          * The entry for React Server Components (RSC).
          * This will be used as the entry point for the server compiler,
-         * and its layer will be set to RSC_LAYERS_NAMES.reactServerComponents,
+         * and its layer will be set to RSC_LAYERS_NAMES.REACT_SERVER_COMPONENTS,
          * enabling server-only runtime and the use of `react-server` export conditions.
          */
         rsc?: string | string[] | RsbuildEntry,
         /**
          * The entry for server-side rendering (SSR).
          * You need to manually import this in your RSC application to render the RSC payload as HTML.
-         * Rsbuild's only responsibility is to set its layer to RSC_LAYERS_NAMES.serverSideRendering.
+         * Rsbuild's only responsibility is to set its layer to RSC_LAYERS_NAMES.SERVER_SIDE_RENDERING.
          */
         ssr?: string | string[],
         /**
