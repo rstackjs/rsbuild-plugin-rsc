@@ -16,19 +16,21 @@ export class SsrEntryPlugin {
 
     const exclude: string[] = [];
     for (const ssrEntry of this.#ssrEntries) {
-      const resolvedSsrEntry = path.isAbsolute(ssrEntry)
+      const entryPath = path.isAbsolute(ssrEntry)
         ? ssrEntry
         : normalResolver.resolveSync({}, compiler.context, ssrEntry);
 
-      if (!resolvedSsrEntry) {
+      if (!entryPath) {
         throw new Error(
           `Can't resolve '${ssrEntry}' in '${compiler.context}'`,
         );
       }
 
+      exclude.push(entryPath);
+
       compiler.options.module.rules.push({
-        resource: resolvedSsrEntry,
-        layer: RSC_LAYERS_NAMES.REACT_SERVER_COMPONENTS,
+        resource: entryPath,
+        layer: RSC_LAYERS_NAMES.SERVER_SIDE_RENDERING,
       });
     }
 

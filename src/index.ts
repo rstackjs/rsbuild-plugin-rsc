@@ -12,19 +12,32 @@ const ENVIRONMENT_NAMES = {
   CLIENT: 'client',
 };
 
-function normalizeServerEntry(entry: RsbuildEntry): RsbuildEntry {
+function normalizeEntry(entry: string | string[] | RsbuildEntry, layer?: string): RsbuildEntry {
   if (typeof entry === "string" || Array.isArray(entry)) {
     return {
       index: {
         import: entry,
-        layer: RSC_LAYERS_NAMES.REACT_SERVER_COMPONENTS,
+        layer,
       },
     };
   }
-  return {
-    ...entry,
-    layer: RSC_LAYERS_NAMES.REACT_SERVER_COMPONENTS,
-  };
+  return entry;
+}
+
+function normalizeServerEntry(entry: string | string[] | RsbuildEntry): RsbuildEntry {
+  const normalized = normalizeEntry(entry, RSC_LAYERS_NAMES.REACT_SERVER_COMPONENTS);
+  for (const key in normalized) {
+    const item = normalized[key];
+    if (typeof item === "string" || Array.isArray(item)) {
+      normalized[key] = {
+        import: item,
+        layer: RSC_LAYERS_NAMES.REACT_SERVER_COMPONENTS,
+      };
+    } else {
+      item.layer = RSC_LAYERS_NAMES.REACT_SERVER_COMPONENTS;
+    }
+  }
+  return normalized;
 }
 
 export const pluginRSC = (
@@ -44,17 +57,16 @@ export const pluginRSC = (
 
       const clientSource: SourceConfig | undefined = entries.client
         ? {
-          entry: entries.client,
+          entry: normalizeEntry(entries.client),
         }
         : undefined;
 
       const rscEnvironmentsConfig: RsbuildConfig = {
         tools: {
           swc: {
-            // TODO: Rsbuild does not currently use a version of Rspack with RSC support, so we use a type assertion here to access RSC_LAYERS_NAMES.
             rspackExperiments: {
               reactServerComponents: true,
-            } as any,
+            },
           },
         },
         environments: {
