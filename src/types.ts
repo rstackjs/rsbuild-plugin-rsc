@@ -1,25 +1,25 @@
-import type { RsbuildEntry } from '@rsbuild/core';
+import type { Rspack } from "@rsbuild/core";
 
 export type PluginRSCOptions = {
-    entries?: {
-        /**
-         * The entry for React Server Components (RSC).
-         * This will be used as the entry point for the server compiler,
-         * and its layer will be set to RSC_LAYERS_NAMES.REACT_SERVER_COMPONENTS,
-         * enabling server-only runtime and the use of `react-server` export conditions.
-         */
-        rsc?: string | string[] | RsbuildEntry,
-        /**
-         * The entry for server-side rendering (SSR).
-         * You need to manually import this in your RSC application to render the RSC payload as HTML.
-         * Rsbuild's only responsibility is to set its layer to RSC_LAYERS_NAMES.SERVER_SIDE_RENDERING.
-         */
-        ssr?: string | string[],
-        /**
-         * The browser (client) entry.
-         * This will be used as the entry point for the client compiler.
-         * Rsbuild will inject the browser-side output of "use client" modules into this entry.
-         */
-        client?: string | string[] | RsbuildEntry,
-    }
+  /**
+   * Configuration for assigning modules to specific Rspack layers.
+   * * This determines which modules are processed as React Server Components (RSC)
+   * and which remain in the standard Server-Side Rendering (SSR) environment.
+   */
+  layers?: {
+    /**
+     * The condition to match React Server Components (RSC).
+     * * Modules matching this rule will be assigned to the `react-server` layer
+     * and processed with the `react-server` export condition (server-only runtime).
+     */
+    rsc?: Rspack.RuleSetCondition;
+
+    /**
+     * The condition to match modules that must remain in the standard SSR (Node.js) layer.
+     * * **Priority:** This rule has higher priority than `rsc`.
+     * * Use this to explicitly force specific files (e.g., server entry points) to stay 
+     * in the standard Node.js environment, even if they overlap with the `rsc` pattern.
+     */
+    ssr?: Rspack.RuleSetCondition;
+  };
 };

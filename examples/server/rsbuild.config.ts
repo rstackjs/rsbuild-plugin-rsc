@@ -1,20 +1,38 @@
 import { defineConfig } from '@rsbuild/core';
-import { pluginRSC } from 'rsbuild-plugin-rsc';
+import { pluginRSC, RSC_LAYERS_NAMES } from 'rsbuild-plugin-rsc';
 import { pluginReact } from "@rsbuild/plugin-react";
 import { toNodeHandler } from 'srvx/node';
 import { IncomingMessage, ServerResponse } from 'node:http';
+import path from 'node:path';
 
 export default defineConfig({
   plugins: [
       pluginReact(),
       pluginRSC({
-          entries: {
-            rsc: './src/framework/entry.rsc.tsx',
-            ssr: './src/framework/entry.ssr.tsx',
-            client: './src/framework/entry.client.tsx',
-          },
+        layers: {
+          ssr: path.join(__dirname, './src/framework/entry.ssr.tsx'),
+        }
       })
   ],
+  environments: {
+    server: {
+      source: {
+        entry: {
+          index: {
+            import: './src/framework/entry.rsc.tsx',
+            layer: RSC_LAYERS_NAMES.REACT_SERVER_COMPONENTS
+          }
+        },
+      }
+    },
+    client: {
+      source: {
+        entry: {
+          index: './src/framework/entry.client.tsx',
+        },
+      }
+    }
+  },
   dev: {
     setupMiddlewares: (middlewares, serverAPI) => {
       // Custom middleware to handle RSC (React Server Components) requests

@@ -1,19 +1,33 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from "@rsbuild/plugin-react";
-import { pluginRSC } from 'rsbuild-plugin-rsc';
+import { pluginRSC, RSC_LAYERS_NAMES } from 'rsbuild-plugin-rsc';
 import { toNodeHandler } from 'srvx/node';
 import type Fetch from './server';
 
 export default defineConfig({
   plugins: [
     pluginReact(),
-    pluginRSC({
-      entries: {
-        rsc: './server/index.tsx',
-        client: './client/index.tsx',
-      },
-    })
+    pluginRSC()
   ],
+  environments: {
+    server: {
+      source: {
+        entry: {
+          index: {
+            import: './server/index.tsx',
+            layer: RSC_LAYERS_NAMES.REACT_SERVER_COMPONENTS
+          }
+        },
+      }
+    },
+    client: {
+      source: {
+        entry: {
+          index: './client/index.tsx',
+        },
+      }
+    }
+  },
   dev: {
     setupMiddlewares: (middlewares, serverAPI) => {
       middlewares.unshift(async (req, res, next) => {
