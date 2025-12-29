@@ -1,0 +1,29 @@
+{
+  "name": "parcel-rsc-static",
+  "version": "0.0.0",
+  "private": true,
+  "targets": {
+    "react-static": {
+      "source": "pages/*.tsx",
+      "context": "react-server"
+    }
+  },
+  "scripts": {
+    "build": "rsbuild build",
+    "dev": "rsbuild dev",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-server-dom-rspack": "0.0.1-alpha.3"
+  },
+  "devDependencies": {
+    "@rsbuild/plugin-react": "^1.4.2",
+    "@types/react-dom": "^19.2.3",
+    "fast-glob": "^3.3.3",
+    "rsbuild-plugin-rsc": "workspace:*",
+    "rsc-html-stream": "^0.0.7",
+    "srvx": "^0.9.8"
+  }
+}
