@@ -75,9 +75,12 @@ export const pluginRSC = (
           rule = rule.exclude.add(ssr).end();
         }
         rule
-          .issuerLayer(RSC_LAYERS_NAMES.REACT_SERVER_COMPONENTS)
-          .resolve.conditionNames.add('react-server')
-          .add('...');
+          .issuerLayer([
+            RSC_LAYERS_NAMES.REACT_SERVER_COMPONENTS,
+            RSC_LAYERS_NAMES.ACTION_BROWSER,
+          ])
+          .resolve.conditionNames.add("react-server")
+          .add("...");
 
         chain.plugin('rsc-server').use(rscPlugins.ServerPlugin);
       }

@@ -18,8 +18,6 @@
     "@rsbuild/core": "^1.6.14",
     "@rsbuild/plugin-react": "^1.4.2",
     "@types/express": "^5.0.6",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
     "rsbuild-plugin-rsc": "workspace:*",
     "srvx": "^0.9.8"
   }
