@@ -48,11 +48,12 @@ async function hydrate(): Promise<void> {
     hydrateRoot(document, browserRoot);
   }
 
-  if (import.meta.hot) {
-    import.meta.hot.on('rsc:update', () => {
-      window.history.replaceState({}, '', window.location.href);
-    });
-  }
+  // TODO: Hot Module Replacement (HMR) for RSC
+  // if (import.meta.webpackHot) {
+  //   import.meta.webpackHot.on('rsc:update', () => {
+  //     window.history.replaceState({}, '', window.location.href);
+  //   });
+  // }
 }
 
 function listenNavigation(onNavigation: () => void): () => void {

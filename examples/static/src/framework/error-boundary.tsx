@@ -66,7 +66,7 @@ function DefaultGlobalErrorPage(props: { error: Error; reset: () => void }) {
         <div>Caught an unexpected error</div>
         <pre>
           Error:{' '}
-          {import.meta.env.DEV && 'message' in props.error
+          {process.env.NODE_ENV === 'development' && 'message' in props.error
             ? props.error.message
             : '(Unknown)'}
         </pre>

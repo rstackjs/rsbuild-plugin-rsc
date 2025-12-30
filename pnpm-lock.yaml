@@ -161,6 +161,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.7)
+      '@types/webpack-env':
+        specifier: ^1.18.8
+        version: 1.18.8
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3

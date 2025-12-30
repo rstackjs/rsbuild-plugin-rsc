@@ -21,6 +21,7 @@
   "devDependencies": {
     "@rsbuild/plugin-react": "^1.4.2",
     "@types/react-dom": "^19.2.3",
+    "@types/webpack-env": "^1.18.8",
     "fast-glob": "^3.3.3",
     "rsbuild-plugin-rsc": "workspace:*",
     "rsc-html-stream": "^0.0.7",
