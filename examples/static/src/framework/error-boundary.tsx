@@ -44,7 +44,7 @@ class ErrorBoundary extends React.Component<{
 // https://github.com/vercel/next.js/blob/473ae4b70dd781cc8b2620c95766f827296e689a/packages/next/src/client/components/builtin/global-error.tsx
 function DefaultGlobalErrorPage(props: { error: Error; reset: () => void }) {
   return (
-    <html>
+    <html lang="en">
       <head>
         <title>Unexpected Error</title>
       </head>

@@ -1,13 +1,13 @@
+import React from 'react';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import {
-  createFromReadableStream,
   createFromFetch,
-  setServerCallback,
+  createFromReadableStream,
   createTemporaryReferenceSet,
   encodeReply,
   onServerComponentChanges,
+  setServerCallback,
 } from 'react-server-dom-rspack/client.browser';
-import React from 'react';
-import { createRoot, hydrateRoot } from 'react-dom/client';
 import { rscStream } from 'rsc-html-stream/client';
 import type { RscPayload } from './entry.rsc';
 import { createRscRenderRequest } from './request';
@@ -29,7 +29,7 @@ async function main() {
 
     React.useEffect(() => {
       setPayload = (v) => React.startTransition(() => setPayload_(v));
-    }, [setPayload_]);
+    }, []);
 
     // re-fetch/render on client side navigation
     React.useEffect(() => {
@@ -105,7 +105,7 @@ function listenNavigation(onNavigation: () => void) {
   };
 
   function onClick(e: MouseEvent) {
-    let link = (e.target as Element).closest('a');
+    const link = (e.target as Element).closest('a');
     if (
       link &&
       link instanceof HTMLAnchorElement &&

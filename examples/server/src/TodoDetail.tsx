@@ -1,7 +1,7 @@
 import { getTodo, updateTodo } from './actions';
 
 export async function TodoDetail({ id }: { id: number }) {
-  let todo = await getTodo(id);
+  const todo = await getTodo(id);
   if (!todo) {
     return <p>Todo not found</p>;
   }

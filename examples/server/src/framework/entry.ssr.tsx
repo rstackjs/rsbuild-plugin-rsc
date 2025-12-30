@@ -1,9 +1,9 @@
-import { createFromReadableStream } from 'react-server-dom-rspack/client';
 import React from 'react';
-import { renderToReadableStream } from 'react-dom/server';
 import type { ReactFormState } from 'react-dom/client';
+import { renderToReadableStream } from 'react-dom/server';
+import { createFromReadableStream } from 'react-server-dom-rspack/client';
 import { injectRSCPayload } from 'rsc-html-stream/server';
-import { RscPayload } from './entry.rsc';
+import type { RscPayload } from './entry.rsc';
 
 export async function renderHTML(
   rscStream: ReadableStream<Uint8Array>,
@@ -39,12 +39,12 @@ export async function renderHTML(
       nonce: options?.nonce,
       formState: options?.formState,
     });
-  } catch (e) {
+  } catch {
     // fallback to render an empty shell and run pure CSR on browser,
     // which can replay server component error and trigger error boundary.
     status = 500;
     htmlStream = await renderToReadableStream(
-      <html>
+      <html lang="en">
         <body>
           <noscript>Internal Server Error: SSR failed</noscript>
         </body>

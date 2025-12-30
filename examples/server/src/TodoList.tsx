@@ -1,8 +1,8 @@
-import { TodoItem } from './TodoItem';
 import { getTodos } from './actions';
+import { TodoItem } from './TodoItem';
 
 export async function TodoList({ id }: { id: number | undefined }) {
-  let todos = await getTodos();
+  const todos = await getTodos();
   return (
     <ul className="todo-list">
       {todos.map((todo) => (

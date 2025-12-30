@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { expect, retry, test } from '@e2e/helper';
-import { setup, PROJECT_DIR } from './setup';
+import { PROJECT_DIR, setup } from './setup';
 
 const modifyFile = async (
   filePath: string,

@@ -6,6 +6,7 @@
     "skipLibCheck": true,
     "useDefineForClassFields": true,
     "jsx": "react-jsx",
+    "types": ["webpack-env"],
 
     /* modules */
     "module": "ESNext",

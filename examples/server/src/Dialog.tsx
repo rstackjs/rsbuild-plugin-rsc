@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useRef } from 'react';
+import { type ReactNode, useRef } from 'react';
 
 export function Dialog({
   trigger,
@@ -9,7 +9,7 @@ export function Dialog({
   trigger: ReactNode;
   children: ReactNode;
 }) {
-  let ref = useRef<HTMLDialogElement | null>(null);
+  const ref = useRef<HTMLDialogElement | null>(null);
   return (
     <>
       <button onClick={() => ref.current?.showModal()}>{trigger}</button>

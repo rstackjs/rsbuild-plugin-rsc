@@ -24,7 +24,8 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
-    "test": "cd ./e2e && pnpm test"
+    "test": "cd ./e2e && pnpm test",
+    "check": "biome check --write"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.10",

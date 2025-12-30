@@ -1,9 +1,9 @@
+import React from 'react';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import {
   createFromFetch,
   createFromReadableStream,
 } from 'react-server-dom-rspack/client.browser';
-import React from 'react';
-import { createRoot, hydrateRoot } from 'react-dom/client';
 import { rscStream } from 'rsc-html-stream/client';
 import { GlobalErrorBoundary } from './error-boundary';
 import { createRscRenderRequest } from './request';
@@ -25,7 +25,7 @@ async function hydrate(): Promise<void> {
 
     React.useEffect(() => {
       setPayload = (v) => React.startTransition(() => setPayload_(v));
-    }, [setPayload_]);
+    }, []);
 
     React.useEffect(() => {
       return listenNavigation(() => onNavigation());
@@ -73,7 +73,7 @@ function listenNavigation(onNavigation: () => void): () => void {
   };
 
   function onClick(e: MouseEvent) {
-    let link = (e.target as Element).closest('a');
+    const link = (e.target as Element).closest('a');
     if (
       link &&
       link instanceof HTMLAnchorElement &&

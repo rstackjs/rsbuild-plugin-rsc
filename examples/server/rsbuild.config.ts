@@ -1,9 +1,9 @@
-import { defineConfig } from '@rsbuild/core';
-import { pluginRSC, RSC_LAYERS_NAMES } from 'rsbuild-plugin-rsc';
-import { pluginReact } from '@rsbuild/plugin-react';
-import { toNodeHandler } from 'srvx/node';
-import { IncomingMessage, ServerResponse } from 'node:http';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import path from 'node:path';
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+import { pluginRSC, RSC_LAYERS_NAMES } from 'rsbuild-plugin-rsc';
+import { toNodeHandler } from 'srvx/node';
 
 export default defineConfig({
   plugins: [

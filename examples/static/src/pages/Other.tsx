@@ -1,12 +1,12 @@
 'use server-entry';
 
-import type { PageProps } from '../framework/ssg';
 import { Nav } from '../components/Nav';
+import type { PageProps } from '../framework/ssg';
 import '../components/style.css';
 
 export default function Index({ pages, currentPage }: PageProps) {
   return (
-    <html>
+    <html lang="en">
       <head>
         <title>Static RSC</title>
       </head>

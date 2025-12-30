@@ -1,7 +1,7 @@
 'use client';
 
 import { startTransition, useOptimistic } from 'react';
-import { deleteTodo, setTodoComplete, type Todo as ITodo } from './actions';
+import { deleteTodo, type Todo as ITodo, setTodoComplete } from './actions';
 
 export function TodoItem({
   todo,
@@ -10,7 +10,7 @@ export function TodoItem({
   todo: ITodo;
   isSelected: boolean;
 }) {
-  let [isOptimisticComplete, setOptimisticComplete] = useOptimistic(
+  const [isOptimisticComplete, setOptimisticComplete] = useOptimistic(
     todo.isComplete,
   );
 

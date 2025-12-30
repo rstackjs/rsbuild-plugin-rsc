@@ -1,8 +1,8 @@
 import { renderToReadableStream } from 'react-server-dom-rspack/server.node';
+import { renderHtml } from './entry.ssr';
 import { parseRenderRequest } from './request';
 import type { RscPayload } from './shared';
-import { renderHtml } from './entry.ssr';
-import { Page } from './ssg';
+import type { Page } from './ssg';
 
 function getPages(): Map<string, Page> {
   const contextRequire = import.meta.webpackContext('../pages', {

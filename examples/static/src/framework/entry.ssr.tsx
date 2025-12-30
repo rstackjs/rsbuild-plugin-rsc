@@ -1,7 +1,7 @@
-import { createFromReadableStream } from 'react-server-dom-rspack/client.node';
 import React from 'react';
 import { renderToReadableStream } from 'react-dom/server.edge';
 import { prerender } from 'react-dom/static.edge';
+import { createFromReadableStream } from 'react-server-dom-rspack/client.node';
 import { injectRSCPayload } from 'rsc-html-stream/server';
 import type { RscPayload } from './shared';
 
@@ -34,12 +34,12 @@ export async function renderHtml(
       htmlStream = await renderToReadableStream(<SsrRoot />, {
         bootstrapScripts: options?.bootstrapScripts,
       });
-    } catch (e) {
+    } catch {
       // fallback to render an empty shell and run pure CSR on browser,
       // which can replay server component error and trigger error boundary.
       status = 500;
       htmlStream = await renderToReadableStream(
-        <html>
+        <html lang="en">
           <body>
             <noscript>Internal Server Error: SSR failed</noscript>
           </body>

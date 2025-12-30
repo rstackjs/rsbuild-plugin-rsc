@@ -1,6 +1,6 @@
+import path from 'node:path';
 import { expect, patchFile, test } from '@e2e/helper';
 import { PROJECT_DIR, setup } from './setup';
-import path from 'node:path';
 
 const createTodo = async (
   page: any,
@@ -140,7 +140,6 @@ test('should navigate to todo detail page', async ({ page, dev }) => {
   await createTodo(page, 'Detail Test Todo', 'Test description for details');
 
   const firstTodoLink = page.locator('.todo-column ul li a').first();
-  const todoTitle = await firstTodoLink.textContent();
   await firstTodoLink.click();
 
   await verifyTodoDetailPage(page);

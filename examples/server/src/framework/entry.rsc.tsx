@@ -1,17 +1,17 @@
+import type React from 'react';
+import type { ReactFormState } from 'react-dom/client';
 import {
-  renderToReadableStream,
   createTemporaryReferenceSet,
-  decodeReply,
   decodeAction,
   decodeFormState,
-  TemporaryReferenceSet,
+  decodeReply,
   loadServerAction,
-  ServerEntry,
+  renderToReadableStream,
+  type ServerEntry,
+  type TemporaryReferenceSet,
 } from 'react-server-dom-rspack/server.node';
-import type { ReactFormState } from 'react-dom/client';
-import React from 'react';
-import { parseRenderRequest } from './request.tsx';
 import { renderHTML } from './entry.ssr.tsx';
+import { parseRenderRequest } from './request.tsx';
 
 // The schema of payload which is serialized into RSC stream on rsc environment
 // and deserialized on ssr/client environments.
@@ -71,8 +71,8 @@ async function handleRequest({
       const decodedAction = await decodeAction(formData);
       try {
         const result = await decodedAction();
-        formState = await decodeFormState(result, formData);
-      } catch (e) {
+        formState = (await decodeFormState(result, formData)) as ReactFormState;
+      } catch {
         // there's no single general obvious way to surface this error,
         // so explicitly return classic 500 response.
         return new Response('Internal Server Error: server action failed', {
@@ -146,12 +146,12 @@ async function handler(request: Request, id?: number): Promise<Response> {
       `default-src 'self';`,
       // `unsafe-eval` is required during dev since React uses eval for findSourceMapURL feature
       `script-src 'self' 'nonce-${nonce}' ${
-        import.meta.env.DEV ? `'unsafe-eval'` : ``
+        process.env.NODE_ENV === 'development' ? `'unsafe-eval'` : ``
       };`,
       `style-src 'self' 'unsafe-inline';`,
       `img-src 'self' data:;`,
       // allow blob: worker for Vite server ping shared worker
-      import.meta.hot && `worker-src 'self' blob:;`,
+      import.meta.webpackHot && `worker-src 'self' blob:;`,
     ]
       .filter(Boolean)
       .join('');
@@ -164,6 +164,6 @@ export default {
   fetch: handler,
 };
 
-if (import.meta.hot) {
-  import.meta.hot.accept();
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept();
 }

@@ -2,13 +2,13 @@
 
 import './Todos.css';
 import { Dialog } from './Dialog';
-import { TodoDetail } from './TodoDetail';
 import { TodoCreate } from './TodoCreate';
+import { TodoDetail } from './TodoDetail';
 import { TodoList } from './TodoList';
 
 export async function Todos({ id }: { id?: number }) {
   return (
-    <html style={{ colorScheme: 'dark light' }}>
+    <html lang="en" style={{ colorScheme: 'dark light' }}>
       <head>
         <title>Todos</title>
       </head>
