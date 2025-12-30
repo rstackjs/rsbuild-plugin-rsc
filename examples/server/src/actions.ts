@@ -1,7 +1,5 @@
 "use server";
 
-import fs from 'fs/promises';
-
 export interface Todo {
   id: number,
   title: string,
@@ -10,16 +8,10 @@ export interface Todo {
   isComplete: boolean
 }
 
-const TODOS_FILE = process.env.TODOS_FILE || 'todos.json';
+const todos: Todo[] = []
 
 export async function getTodos(): Promise<Todo[]> {
-  try {
-    let contents = await fs.readFile(TODOS_FILE, 'utf8');
-    return JSON.parse(contents);
-  } catch {
-    await fs.writeFile(TODOS_FILE, '[]');
-    return [];
-  }
+  return todos;
 }
 
 export async function getTodo(id: number): Promise<Todo | undefined> {
@@ -40,7 +32,6 @@ export async function createTodo(formData: FormData) {
     dueDate: typeof dueDate === 'string' ? dueDate : new Date().toISOString(),
     isComplete: false
   });
-  await fs.writeFile(TODOS_FILE, JSON.stringify(todos));
 }
 
 export async function updateTodo(id: number, formData: FormData) {
@@ -53,7 +44,6 @@ export async function updateTodo(id: number, formData: FormData) {
     todo.title = typeof title === 'string' ? title : '';
     todo.description = typeof description === 'string' ? description : '';
     todo.dueDate = typeof dueDate === 'string' ? dueDate : new Date().toISOString();
-    await fs.writeFile(TODOS_FILE, JSON.stringify(todos));
   }
 }
 
@@ -62,7 +52,6 @@ export async function setTodoComplete(id: number, isComplete: boolean) {
   let todo = todos.find(todo => todo.id === id);
   if (todo) {
     todo.isComplete = isComplete;
-    await fs.writeFile(TODOS_FILE, JSON.stringify(todos));
   }
 }
 
@@ -71,6 +60,5 @@ export async function deleteTodo(id: number) {
   let index = todos.findIndex(todo => todo.id === id);
   if (index >= 0) {
     todos.splice(index, 1);
-    await fs.writeFile(TODOS_FILE, JSON.stringify(todos));
   }
 }
