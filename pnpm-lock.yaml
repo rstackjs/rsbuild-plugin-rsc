@@ -99,6 +99,9 @@ importers:
       '@types/express':
         specifier: ^5.0.6
         version: 5.0.6
+      '@types/webpack-env':
+        specifier: ^1.18.8
+        version: 1.18.8
       rsbuild-plugin-rsc:
         specifier: workspace:*
         version: link:../..
@@ -157,7 +160,7 @@ importers:
     devDependencies:
       '@rsbuild/plugin-react':
         specifier: ^1.4.2
-        version: 1.4.2(@rsbuild/core@1.7.0-beta.1)
+        version: 1.4.2(@rsbuild/core@1.6.15)
       '@types/react-dom':
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.7)
@@ -1506,14 +1509,6 @@ snapshots:
   '@rsbuild/plugin-react@1.4.2(@rsbuild/core@1.6.15)':
     dependencies:
       '@rsbuild/core': 1.6.15
-      '@rspack/plugin-react-refresh': 1.5.3(react-refresh@0.18.0)
-      react-refresh: 0.18.0
-    transitivePeerDependencies:
-      - webpack-hot-middleware
-
-  '@rsbuild/plugin-react@1.4.2(@rsbuild/core@1.7.0-beta.1)':
-    dependencies:
-      '@rsbuild/core': 1.7.0-beta.1
       '@rspack/plugin-react-refresh': 1.5.3(react-refresh@0.18.0)
       react-refresh: 0.18.0
     transitivePeerDependencies:

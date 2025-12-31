@@ -1,10 +1,5 @@
 import type { ReactFormState } from 'react-dom/client';
 import {
-  createTemporaryReferenceSet,
-  decodeAction,
-  decodeFormState,
-  decodeReply,
-  loadServerAction,
   renderToReadableStream,
   type TemporaryReferenceSet,
 } from 'react-server-dom-rspack/server.node';
@@ -16,41 +11,12 @@ export type RscPayload = {
   formState?: ReactFormState;
 };
 
-async function handler(request: Request): Promise<Response> {
-  const isAction = request.method === 'POST';
-  let returnValue: RscPayload['returnValue'] | undefined;
-  let formState: ReactFormState | undefined;
+async function handler(): Promise<Response> {
   let temporaryReferences: TemporaryReferenceSet | undefined;
-  if (isAction) {
-    const actionId = request.headers.get('x-rsc-action');
-    if (actionId) {
-      const contentType = request.headers.get('content-type');
-      const body = contentType?.startsWith('multipart/form-data')
-        ? await request.formData()
-        : await request.text();
-      temporaryReferences = createTemporaryReferenceSet();
-      const args = await decodeReply(body, { temporaryReferences });
-      const action = loadServerAction(actionId);
-      try {
-        const data = await action.apply(null, args);
-        returnValue = { ok: true, data };
-      } catch (e) {
-        returnValue = { ok: false, data: e };
-      }
-    } else {
-      const formData = await request.formData();
-      const decodedAction = await decodeAction(formData);
-      const result = await decodedAction!();
-      formState = (await decodeFormState(result, formData)) as ReactFormState;
-    }
-  }
-
-  const rscPayload: RscPayload = { root: <RSC />, formState, returnValue };
   const rscOptions = { temporaryReferences };
-  const rscStream = renderToReadableStream(rscPayload, rscOptions);
+  const rscStream = renderToReadableStream(<RSC />, rscOptions);
 
   return new Response(rscStream, {
-    status: returnValue?.ok === false ? 500 : undefined,
     headers: {
       'content-type': 'text/x-component;charset=utf-8',
     },
@@ -61,6 +27,6 @@ export default {
   fetch: handler,
 };
 
-if (import.meta.hot) {
-  import.meta.hot.accept();
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept();
 }

@@ -3,6 +3,7 @@ import {
   createFromFetch,
   createTemporaryReferenceSet,
   encodeReply,
+  onServerComponentChanges,
 } from 'react-server-dom-rspack/client.browser';
 
 async function fetchRSC<T>(
@@ -36,10 +37,18 @@ export function App() {
   );
 }
 
-let request: Promise<{ root: ReactElement }> | null = null;
+let request: Promise<ReactElement> | null = null;
 
 function RSC() {
   // Simple cache to make sure we only fetch once.
   request ??= fetchRSC('/');
-  return use(request).root;
+  return use(request);
+}
+
+// implement server HMR by triggering re-fetch/render of RSC upon server code change
+if (process.env.NODE_ENV === 'development') {
+  onServerComponentChanges(() => {
+    console.log('[rspack-rsc:update]');
+    window.location.reload();
+  });
 }

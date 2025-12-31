@@ -34,10 +34,7 @@ export default defineConfig({
           const indexModule = await serverAPI.environments.server.loadBundle<{
             default: typeof Fetch;
           }>('index');
-          await toNodeHandler((req) => indexModule.default.fetch(req))(
-            req,
-            res,
-          );
+          await toNodeHandler(() => indexModule.default.fetch())(req, res);
         } else {
           next();
         }
