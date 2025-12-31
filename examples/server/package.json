@@ -10,7 +10,7 @@
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-server-dom-rspack": "0.0.1-alpha.3",
+    "react-server-dom-rspack": "0.0.1-alpha.5",
     "rsc-html-stream": "^0.0.7"
   },
   "devDependencies": {

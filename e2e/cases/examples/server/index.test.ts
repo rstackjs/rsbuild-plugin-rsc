@@ -253,7 +253,7 @@ test('should not load CSS when "use server-entry" directive is removed', async (
 }) => {
   await patchFile(
     path.join(PROJECT_DIR, 'src/Todos.tsx'),
-    (content) => content!.replace('"use server-entry";', ''),
+    (content) => content!.replace('\'use server-entry\';', ''),
     async () => {
       await setup(dev, page);
 

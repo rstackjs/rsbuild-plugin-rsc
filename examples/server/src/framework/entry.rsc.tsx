@@ -55,7 +55,7 @@ async function handleRequest({
         : await request.text();
       temporaryReferences = createTemporaryReferenceSet();
       const args = await decodeReply(body, { temporaryReferences });
-      const action = await loadServerAction(renderRequest.actionId);
+      const action = loadServerAction(renderRequest.actionId);
       try {
         const data = await action.apply(null, args);
         returnValue = { ok: true, data };

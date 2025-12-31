@@ -40,16 +40,16 @@
     "fs-extra": "^11.3.3",
     "playwright": "^1.57.0",
     "prebundle": "1.6.0",
-    "react-server-dom-rspack": "0.0.1-alpha.3",
+    "react-server-dom-rspack": "0.0.1-alpha.5",
     "rsbuild-plugin-arethetypeswrong": "^0.1.1"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x",
-    "react-server-dom-rspack": "0.0.1-alpha.3"
+    "react-server-dom-rspack": "0.0.1-alpha.5"
   },
   "pnpm": {
     "overrides": {
-      "@rspack/core": "npm:@rspack-canary/core@1.7.0-canary-9a468043-20251230094321"
+      "@rspack/core": "npm:@rspack-canary/core@1.7.0-canary-151c4aeb-20251230144029"
     }
   }
 }

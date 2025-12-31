@@ -30,7 +30,7 @@ async function handler(request: Request): Promise<Response> {
         : await request.text();
       temporaryReferences = createTemporaryReferenceSet();
       const args = await decodeReply(body, { temporaryReferences });
-      const action = await loadServerAction(actionId);
+      const action = loadServerAction(actionId);
       try {
         const data = await action.apply(null, args);
         returnValue = { ok: true, data };
