@@ -25,6 +25,7 @@ export default defineConfig({
     },
   },
   dev: {
+    writeToDisk: true,
     setupMiddlewares: (middlewares, serverAPI) => {
       // Custom middleware to handle RSC (React Server Components) requests
       middlewares.unshift(async (req, res, next) => {
