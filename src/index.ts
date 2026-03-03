@@ -19,6 +19,17 @@ const findSourceMapURLCode = [
 
 const findSourceMapURLCodeDataUri = `data:text/javascript,${encodeURIComponent(findSourceMapURLCode)}`;
 
+/**
+ * Plugin to inject findSourceMapURL callback as a global entry
+ */
+class FindSourceMapURLPlugin {
+  apply(compiler: typeof rspack.Compiler.prototype) {
+    new rspack.EntryPlugin(compiler.context, findSourceMapURLCodeDataUri, {
+      name: undefined,
+    }).apply(compiler);
+  }
+}
+
 export const pluginRSC = (
   pluginOptions: PluginRSCOptions = {},
 ): RsbuildPlugin => ({
@@ -200,12 +211,7 @@ export const pluginRSC = (
         // In development mode, inject setFindSourceMapURLCallback to enable
         // source map resolution for server component error stacks in the browser.
         if (isDev) {
-          const entries = chain.entryPoints.entries();
-          if (entries) {
-            for (const entryName of Object.keys(entries)) {
-              chain.entry(entryName).prepend(findSourceMapURLCodeDataUri);
-            }
-          }
+          chain.plugin('find-source-map-url').use(FindSourceMapURLPlugin);
         }
       }
     });
