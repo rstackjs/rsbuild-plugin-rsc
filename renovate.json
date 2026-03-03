@@ -15,18 +15,18 @@
     },
     {
       "description": "Group Rsbuild packages",
-      "matchPackagePatterns": ["^@rsbuild/", "^@rslib/"],
-      "groupName": "Rsbuild packages"
+      "groupName": "Rsbuild packages",
+      "matchPackageNames": ["/^@rsbuild//", "/^@rslib//"]
     },
     {
       "description": "Group React packages",
-      "matchPackagePatterns": ["^react", "^@types/react"],
-      "groupName": "React packages"
+      "groupName": "React packages",
+      "matchPackageNames": ["/^react/", "/^@types/react/"]
     },
     {
       "description": "Group Playwright packages",
-      "matchPackagePatterns": ["^@playwright/", "^playwright$"],
-      "groupName": "Playwright packages"
+      "groupName": "Playwright packages",
+      "matchPackageNames": ["/^@playwright//", "/^playwright$/"]
     },
     {
       "description": "Automerge non-major updates",
