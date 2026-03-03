@@ -3,6 +3,11 @@
   "extends": ["config:recommended"],
   "packageRules": [
     {
+      "description": "Ignore peerDependencies updates",
+      "matchDepTypes": ["peerDependencies"],
+      "enabled": false
+    },
+    {
       "description": "Group all non-major dependencies together",
       "matchUpdateTypes": ["minor", "patch", "digest", "lockFileMaintenance"],
       "groupName": "all non-major dependencies",
