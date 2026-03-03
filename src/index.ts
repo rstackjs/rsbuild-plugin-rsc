@@ -8,6 +8,17 @@ const rsc: typeof rspack.experiments.rsc = rspack.experiments.rsc;
 
 export const Layers: typeof rsc.Layers = rsc.Layers;
 
+const SOURCE_MAP_ENDPOINT = '/__rsbuild_source_map';
+
+const findSourceMapURLCode = [
+  'import { setFindSourceMapURLCallback } from "react-server-dom-rspack/client.browser";',
+  'setFindSourceMapURLCallback(function(fileName, environmentName) {',
+  `  return window.location.origin + "${SOURCE_MAP_ENDPOINT}?fileName=" + encodeURIComponent(fileName) + "&environmentName=" + encodeURIComponent(environmentName);`,
+  '});',
+].join('\n');
+
+const findSourceMapURLCodeDataUri = `data:text/javascript,${encodeURIComponent(findSourceMapURLCode)}`;
+
 export const pluginRSC = (
   pluginOptions: PluginRSCOptions = {},
 ): RsbuildPlugin => ({
@@ -39,6 +50,95 @@ export const pluginRSC = (
           },
         },
       };
+
+      const isDev =
+        process.env.NODE_ENV === 'development' ||
+        config.mode === 'development';
+
+      if (isDev) {
+        const devConfig: RsbuildConfig = {
+          environments: {
+            [server]: {
+              output: {
+                sourceMap: {
+                  js: 'source-map',
+                },
+              },
+            },
+          },
+          dev: {
+            setupMiddlewares: (middlewares, serverAPI) => {
+              middlewares.unshift(async (req, res, next) => {
+                if (!req.url?.startsWith(SOURCE_MAP_ENDPOINT)) {
+                  return next();
+                }
+
+                const url = new URL(
+                  req.url,
+                  `http://${req.headers.host || 'localhost'}`,
+                );
+                const fileName = url.searchParams.get('fileName');
+                if (!fileName) {
+                  res.statusCode = 400;
+                  res.end('Missing fileName parameter');
+                  return;
+                }
+
+                const environmentName =
+                  url.searchParams.get('environmentName') || 'Server';
+                const targetEnv =
+                  environmentName === 'Client' ? client : server;
+                const envAPI = serverAPI.environments[targetEnv];
+
+                if (!envAPI) {
+                  res.statusCode = 404;
+                  res.end('Environment not found');
+                  return;
+                }
+
+                try {
+                  const stats = await envAPI.getStats();
+                  const compilation = stats.compilation;
+
+                  // Try to find the source map asset
+                  const sourceMapName = fileName.endsWith('.map')
+                    ? fileName
+                    : `${fileName}.map`;
+
+                  const asset = compilation.getAsset(sourceMapName);
+                  if (asset) {
+                    res.setHeader('Content-Type', 'application/json');
+                    res.setHeader('Access-Control-Allow-Origin', '*');
+                    res.end(asset.source.source());
+                    return;
+                  }
+
+                  // Fallback: try to match by basename
+                  const baseName = sourceMapName.split('/').pop();
+                  if (baseName) {
+                    for (const a of compilation.getAssets()) {
+                      if (a.name.endsWith(baseName)) {
+                        res.setHeader('Content-Type', 'application/json');
+                        res.setHeader('Access-Control-Allow-Origin', '*');
+                        res.end(a.source.source());
+                        return;
+                      }
+                    }
+                  }
+
+                  res.statusCode = 404;
+                  res.end('Source map not found');
+                } catch {
+                  res.statusCode = 500;
+                  res.end('Error reading source map');
+                }
+              });
+            },
+          },
+        };
+        return mergeRsbuildConfig(config, rscEnvironmentsConfig, devConfig);
+      }
+
       return mergeRsbuildConfig(config, rscEnvironmentsConfig);
     });
 
@@ -50,7 +150,7 @@ export const pluginRSC = (
         server.sockWrite('custom', { event: 'rsc:update' });
     });
 
-    api.modifyBundlerChain(async (chain, { environment }) => {
+    api.modifyBundlerChain(async (chain, { environment, isDev }) => {
       // The RSC plugin is currently incompatible with lazyCompilation; this feature has been forcibly disabled.
       const lazyCompilation = chain.get('lazyCompilation');
       if (
@@ -96,6 +196,17 @@ export const pluginRSC = (
       }
       if (environment.name === client) {
         chain.plugin('rsc-client').use(rscPlugins.ClientPlugin);
+
+        // In development mode, inject setFindSourceMapURLCallback to enable
+        // source map resolution for server component error stacks in the browser.
+        if (isDev) {
+          const entries = chain.entryPoints.entries();
+          if (entries) {
+            for (const entryName of Object.keys(entries)) {
+              chain.entry(entryName).prepend(findSourceMapURLCodeDataUri);
+            }
+          }
+        }
       }
     });
   },

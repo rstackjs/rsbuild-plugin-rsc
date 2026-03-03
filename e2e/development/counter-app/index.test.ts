@@ -112,3 +112,61 @@ test('should not load CSS when "use server-entry" directive is removed', async (
     },
   );
 });
+
+test('should serve source maps via /__rsbuild_source_map endpoint', async ({
+  page,
+  dev,
+}) => {
+  const rsbuild = await setup(dev, page);
+
+  // Wait for the page to load
+  await expect(page.locator('h1')).toHaveText('Client rendered');
+
+  // Request source map for the server bundle entry
+  const response = await page.request.get(
+    `http://localhost:${rsbuild.port}/__rsbuild_source_map?fileName=index.js&environmentName=Server`,
+  );
+
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toContain('application/json');
+
+  const body = await response.json();
+  expect(body).toHaveProperty('version');
+  expect(body).toHaveProperty('sources');
+  expect(body).toHaveProperty('mappings');
+
+  // Verify that the source map contains references to our source files
+  expect(body.sources.some((source: string) => source.includes('.tsx'))).toBe(true);
+});
+
+test('should return 404 for non-existent source map', async ({
+  page,
+  dev,
+}) => {
+  const rsbuild = await setup(dev, page);
+
+  // Wait for the page to load
+  await expect(page.locator('h1')).toHaveText('Client rendered');
+
+  const response = await page.request.get(
+    `http://localhost:${rsbuild.port}/__rsbuild_source_map?fileName=non-existent-file.js&environmentName=Server`,
+  );
+
+  expect(response.status()).toBe(404);
+});
+
+test('should return 400 when fileName parameter is missing', async ({
+  page,
+  dev,
+}) => {
+  const rsbuild = await setup(dev, page);
+
+  // Wait for the page to load
+  await expect(page.locator('h1')).toHaveText('Client rendered');
+
+  const response = await page.request.get(
+    `http://localhost:${rsbuild.port}/__rsbuild_source_map`,
+  );
+
+  expect(response.status()).toBe(400);
+});
