@@ -44,7 +44,7 @@
     "rsbuild-plugin-arethetypeswrong": "^0.1.1"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^2.0.0-beta.6",
+    "@rsbuild/core": "^2.0.0-0",
     "react-server-dom-rspack": "*"
   }
 }
