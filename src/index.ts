@@ -63,8 +63,7 @@ export const pluginRSC = (
       };
 
       const isDev =
-        process.env.NODE_ENV === 'development' ||
-        config.mode === 'development';
+        process.env.NODE_ENV === 'development' || config.mode === 'development';
 
       if (isDev) {
         const devConfig: RsbuildConfig = {

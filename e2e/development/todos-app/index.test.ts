@@ -138,13 +138,12 @@ test('should serve source maps via /__rsbuild_source_map endpoint', async ({
   expect(body).toHaveProperty('mappings');
 
   // Verify that the source map contains references to our source files
-  expect(body.sources.some((source: string) => source.includes('.tsx'))).toBe(true);
+  expect(body.sources.some((source: string) => source.includes('.tsx'))).toBe(
+    true,
+  );
 });
 
-test('should return 404 for non-existent source map', async ({
-  page,
-  dev,
-}) => {
+test('should return 404 for non-existent source map', async ({ page, dev }) => {
   const rsbuild = await setup(dev, page);
 
   // Wait for the page to load
