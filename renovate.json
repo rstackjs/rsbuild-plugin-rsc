@@ -1,8 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
+  "extends": ["config:recommended"],
   "packageRules": [
     {
       "description": "Group all non-major dependencies together",
@@ -40,7 +38,5 @@
   "rangeStrategy": "bump",
   "semanticCommits": "enabled",
   "dependencyDashboard": true,
-  "schedule": [
-    "before 3am on Monday"
-  ]
+  "schedule": ["before 3am on Monday"]
 }
