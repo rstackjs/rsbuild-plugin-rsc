@@ -1,4 +1,6 @@
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import { renderToReadableStream } from 'react-server-dom-rspack/server.node';
+import { toNodeHandler } from 'srvx/node';
 import { renderHtml } from './entry.ssr';
 import { parseRenderRequest } from './request';
 import type { RscPayload } from './shared';
@@ -24,7 +26,7 @@ function getPages(): Map<string, Page> {
 
 const pages = getPages();
 
-export default async function handler(request: Request): Promise<Response> {
+async function handler(request: Request): Promise<Response> {
   // differentiate RSC and SSR request
   const renderRequest = parseRenderRequest(request);
 
@@ -63,25 +65,24 @@ export default async function handler(request: Request): Promise<Response> {
   });
 }
 
-// return both rsc and html streams at once for ssg
-// export async function handleSsg(request: Request): Promise<{
-//   html: ReadableStream<Uint8Array>
-//   rsc: ReadableStream<Uint8Array>
-// }> {
-//   const url = new URL(request.url)
-//   const rscPayload: RscPayload = { root: <Root url={url} /> }
-//   const rscStream = renderToReadableStream(rscPayload)
-//   const [rscStream1, rscStream2] = rscStream.tee()
+const fetch = (req: IncomingMessage, res: ServerResponse<IncomingMessage>) =>
+  toNodeHandler((req) => handler(req))(req, res);
 
-//   const ssr = await import.meta.viteRsc.loadModule<
-//     typeof import('./entry.ssr')
-//   >('ssr', 'index')
-//   const ssrResult = await ssr.renderHtml(rscStream1, {
-//     ssg: true,
-//   })
+async function nodeHandler(
+  req: IncomingMessage,
+  res: ServerResponse<IncomingMessage>,
+  next: () => void,
+) {
+  try {
+    await fetch(req, res);
+  } catch {
+    next();
+  }
+}
 
-//   return { html: ssrResult.stream, rsc: rscStream2 }
-// }
+export default {
+  nodeHandler,
+};
 
 if (import.meta.hot) {
   import.meta.hot.accept();

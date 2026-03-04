@@ -1,16 +1,15 @@
-import type { IncomingMessage, ServerResponse } from 'node:http';
 import path from 'node:path';
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { Layers, pluginRSC } from 'rsbuild-plugin-rsc';
-import { toNodeHandler } from 'srvx/node';
+import type NodeHandler from './src/framework/entry.rsc';
 
 export default defineConfig({
   plugins: [
     pluginReact(),
     pluginRSC({
       layers: {
-        ssr: path.join(__dirname, './src/framework/entry.ssr.tsx'),
+        ssr: path.join(import.meta.dirname, './src/framework/entry.ssr.tsx'),
       },
     }),
   ],
@@ -36,23 +35,11 @@ export default defineConfig({
   dev: {
     setupMiddlewares: (middlewares, serverAPI) => {
       // Custom middleware to handle RSC (React Server Components) requests
-
-      async function fetch(
-        req: IncomingMessage,
-        res: ServerResponse<IncomingMessage>,
-        id?: number,
-      ) {
-        const indexModule =
-          await serverAPI.environments.server.loadBundle<any>('index');
-        await toNodeHandler((req) => indexModule.default(req, id))(req, res);
-      }
-
       middlewares.unshift(async (req, res, next) => {
-        try {
-          await fetch(req, res);
-        } catch {
-          next();
-        }
+        const indexModule = await serverAPI.environments.server.loadBundle<{
+          default: NodeHandler;
+        }>('index');
+        await indexModule.default.nodeHandler(req, res, next);
       });
     },
   },

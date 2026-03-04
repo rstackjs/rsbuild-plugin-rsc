@@ -1,25 +1,149 @@
-# Parcel RSC Static Site Generator Example
+# Rsbuild RSC Static Rendering Example
 
-This example is a simple static site generator built with Parcel and React Server Components.
+This example demonstrates a multi-page static site built with Rsbuild and React Server Components (RSC). It showcases file-based page routing, server-side HTML rendering, client-side hydration, and client-side navigation between pages — all powered by `rsbuild-plugin-rsc`.
 
-Note: the plugins used in this example will move into Parcel eventually.
+## Getting Started
 
-## Setup
+```bash
+# Start development server
+pnpm dev
 
-### pages/*.tsx
+# Build for production
+pnpm build
+```
 
-These are the entry points of the build. They are React Server Components that render the root `<html>` element of the page, and any other client or server components. A Parcel packager plugin executes the server components during the build to render them to static HTML. A separate `.rsc` file for each page is also generated for use during client side navigations.
+## Project Structure
 
-### components/client.tsx
+```
+src/
+├── pages/           # Page components (file-based routing)
+│   ├── Index.tsx
+│   └── Other.tsx
+├── components/      # Shared components
+│   ├── Counter.tsx   # Client component
+│   ├── Nav.tsx       # Server component
+│   └── style.css
+└── framework/       # Framework layer
+    ├── entry.rsc.tsx    # RSC entrypoint (server)
+    ├── entry.ssr.tsx    # SSR entrypoint (server)
+    ├── entry.client.tsx # Client entrypoint (browser)
+    ├── request.tsx      # RSC/SSR request routing
+    ├── shared.tsx       # Shared types
+    └── ssg.tsx          # Page types
+```
 
-This is the main client entrypoint, imported from each page. It uses the Parcel-specific `"use client-entry"` directive to mark that it should only run on the client, and not on the server (even during SSR). The client is responsible for hydrating the initial page, and intercepting link clicks and navigations to perform client side routing.
+### Page Components (`src/pages/*.tsx`)
 
-See the [client side routing](../server/README.md#client-side-routing) section of the server readme for a description of how this works. One difference is that we fetch statically pre-generated `.rsc` files instead of dynamically generated content from the server.
+Each file under `src/pages/` represents a page. Pages are React Server Components that render the full `<html>` document tree using the `"use server-entry"` directive. The file name determines the route (e.g., `Index.tsx` → `/index`, `Other.tsx` → `/other`).
 
-### components/Counter.tsx
+```tsx
+'use server-entry';
 
-This is a client component.
+import { Counter } from '../components/Counter';
+import { Nav } from '../components/Nav';
 
-### components/Nav.tsx
+export default function Index({ pages, currentPage }: PageProps) {
+  return (
+    <html lang="en">
+      <head><title>Static RSC</title></head>
+      <body>
+        <h1>This is an RSC!</h1>
+        <Nav pages={pages} currentPage={currentPage} />
+        <Counter />
+      </body>
+    </html>
+  );
+}
+```
 
-This is a server component that renders a list of links to all of the pages on the site. This is passed as a prop to each entry page component by the SSG packager plugin, and then through to this component.
+Pages are automatically discovered at build time via `import.meta.webpackContext` in `entry.rsc.tsx`, so adding a new `.tsx` file to `src/pages/` is all that's needed to create a new route.
+
+### Server Components (`src/components/Nav.tsx`)
+
+Server components run only on the server. `Nav` renders a list of links for all pages, highlighting the current page via `aria-current`.
+
+### Client Components (`src/components/Counter.tsx`)
+
+Client components use the `"use client"` directive and run in the browser. `Counter` demonstrates interactive state with `useState`.
+
+## Framework Layer
+
+### RSC Entrypoint (`src/framework/entry.rsc.tsx`)
+
+The RSC entrypoint runs in the `react-server-components` layer. It:
+
+1. Discovers all pages under `src/pages/` using `import.meta.webpackContext`
+2. Matches the incoming request URL to a page
+3. Renders the page component to an RSC stream via `react-server-dom-rspack`
+4. For RSC requests (client-side navigation), returns the RSC stream directly
+5. For SSR requests (initial page load), delegates to `entry.ssr.tsx` to produce HTML
+
+### SSR Entrypoint (`src/framework/entry.ssr.tsx`)
+
+The SSR entrypoint consumes the RSC stream and renders it to an HTML stream using `react-dom/server`. The RSC payload is injected into the HTML via `rsc-html-stream` for seamless client hydration.
+
+### Client Entrypoint (`src/framework/entry.client.tsx`)
+
+The client entrypoint hydrates the server-rendered HTML using the embedded RSC payload. It also implements a simple client-side router that:
+
+- Intercepts link clicks to perform client-side navigation
+- Fetches RSC payloads from the server for new pages (via `_.rsc` URL convention)
+- Updates the page without a full browser reload
+
+## Rsbuild Configuration
+
+The `rsbuild.config.ts` configures two environments:
+
+- **server**: Builds `entry.rsc.tsx` with the RSC layer for server-side rendering
+- **client**: Builds `entry.client.tsx` for browser hydration and navigation
+
+```ts
+import { Layers, pluginRSC } from 'rsbuild-plugin-rsc';
+
+export default defineConfig({
+  plugins: [
+    pluginReact(),
+    pluginRSC({
+      layers: {
+        ssr: path.join(import.meta.dirname, './src/framework/entry.ssr.tsx'),
+      },
+    }),
+  ],
+  environments: {
+    server: {
+      source: {
+        entry: {
+          index: {
+            import: './src/framework/entry.rsc.tsx',
+            layer: Layers.rsc,
+          },
+        },
+      },
+    },
+    client: {
+      source: {
+        entry: {
+          index: './src/framework/entry.client.tsx',
+        },
+      },
+    },
+  },
+});
+```
+
+## How It Works
+
+### Initial Page Load
+
+1. Browser requests a URL (e.g., `/`)
+2. The server matches the URL to a page component (`Index.tsx`)
+3. The RSC entrypoint renders the page to an RSC stream
+4. The SSR entrypoint converts the RSC stream to HTML, injecting the RSC payload
+5. The browser receives fully-rendered HTML and hydrates it using the embedded RSC payload
+
+### Client-Side Navigation
+
+1. User clicks a link (e.g., from `Index` to `Other`)
+2. The client router intercepts the click and calls `history.pushState`
+3. The client fetches the RSC payload for the new page (via `_.rsc` URL suffix)
+4. React updates the page in-place without a full reload
