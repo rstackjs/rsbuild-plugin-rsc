@@ -1,13 +1,12 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { pathToFileURL } from 'node:url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const clientDistDir = join(__dirname, 'dist');
-const serverDistDir = join(__dirname, 'dist/server');
+const clientDistDir = join(import.meta.dirname, 'dist');
+const serverDistDir = join(import.meta.dirname, 'dist/server');
 
 // Load the server bundle
-const serverBundle = await import(join(serverDistDir, 'index.js'));
+const serverBundle = await import(pathToFileURL(join(serverDistDir, 'index.js')).href);
 
 async function streamToString(stream) {
   const reader = stream.getReader();
