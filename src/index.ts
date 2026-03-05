@@ -1,5 +1,5 @@
 import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
-import { logger, rspack } from '@rsbuild/core';
+import { rspack } from '@rsbuild/core';
 import type { PluginRSCOptions } from './types.js';
 
 export const PLUGIN_RSC_NAME = 'rsbuild:rsc';
@@ -161,18 +161,6 @@ export const pluginRSC = (
     });
 
     api.modifyBundlerChain(async (chain, { environment, isDev }) => {
-      // The RSC plugin is currently incompatible with lazyCompilation; this feature has been forcibly disabled.
-      const lazyCompilation = chain.get('lazyCompilation');
-      if (
-        lazyCompilation === true ||
-        (typeof lazyCompilation === 'object' && lazyCompilation !== null)
-      ) {
-        logger.warn(
-          'The RSC plugin is currently incompatible with lazyCompilation. This feature will be forcibly disabled.',
-        );
-        chain.lazyCompilation(false);
-      }
-
       if (!rscPlugins) {
         rscPlugins = rsc.createPlugins();
       }
