@@ -166,6 +166,11 @@ export type BuildOptions = CreateRsbuildOptions & {
    */
   runServer?: boolean;
   /**
+   * Whether to start preview server after build.
+   * @default false
+   */
+  preview?: boolean;
+  /**
    * Playwright Page instance.
    * This method will automatically run the server and goto the page.
    */
@@ -241,7 +246,7 @@ export async function build({
         resolve();
       });
       server = {
-        close() {
+        async close() {
           theServer.close();
         },
       };
