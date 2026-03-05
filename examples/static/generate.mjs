@@ -6,7 +6,9 @@ const clientDistDir = join(import.meta.dirname, 'dist');
 const serverDistDir = join(import.meta.dirname, 'dist/server');
 
 // Load the server bundle
-const serverBundle = await import(pathToFileURL(join(serverDistDir, 'index.js')).href);
+const serverBundle = await import(
+  pathToFileURL(join(serverDistDir, 'index.js')).href
+);
 
 async function streamToString(stream) {
   const reader = stream.getReader();
