@@ -166,6 +166,11 @@ export type BuildOptions = CreateRsbuildOptions & {
    */
   runServer?: boolean;
   /**
+   * Whether to start preview server after build.
+   * @default false
+   */
+  preview?: boolean;
+  /**
    * Playwright Page instance.
    * This method will automatically run the server and goto the page.
    */
@@ -182,6 +187,7 @@ export type BuildOptions = CreateRsbuildOptions & {
 export async function build({
   catchBuildError = false,
   runServer = false,
+  preview = false,
   watch = false,
   page,
   logHelper,
@@ -213,6 +219,12 @@ export async function build({
   let port = 0;
   let server = { close: noop };
 
+  if (preview) {
+    const result = await rsbuild.preview();
+    port = result.port;
+    server = result.server;
+  }
+
   if (runServer) {
     port = await getRandomPort();
 
@@ -234,7 +246,7 @@ export async function build({
         resolve();
       });
       server = {
-        close() {
+        async close() {
           theServer.close();
         },
       };

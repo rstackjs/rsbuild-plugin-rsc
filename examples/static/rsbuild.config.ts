@@ -1,18 +1,34 @@
-import type { IncomingMessage, ServerResponse } from 'node:http';
+import { execFile } from 'node:child_process';
 import path from 'node:path';
-import { defineConfig } from '@rsbuild/core';
+import { promisify } from 'node:util';
+import { defineConfig, type RsbuildPlugin } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { Layers, pluginRSC } from 'rsbuild-plugin-rsc';
-import { toNodeHandler } from 'srvx/node';
+import type NodeHandler from './src/framework/entry.rsc';
+
+const execFileAsync = promisify(execFile);
+
+const pluginStaticGenerate = (): RsbuildPlugin => ({
+  name: 'static-generate',
+  setup(api) {
+    api.onAfterBuild(async () => {
+      const scriptPath = path.join(import.meta.dirname, 'generate.mjs');
+      const { stdout, stderr } = await execFileAsync('node', [scriptPath]);
+      if (stdout) console.log(stdout);
+      if (stderr) console.error(stderr);
+    });
+  },
+});
 
 export default defineConfig({
   plugins: [
     pluginReact(),
     pluginRSC({
       layers: {
-        ssr: path.join(__dirname, './src/framework/entry.ssr.tsx'),
+        ssr: path.join(import.meta.dirname, './src/framework/entry.ssr.tsx'),
       },
     }),
+    pluginStaticGenerate(),
   ],
   environments: {
     server: {
@@ -22,6 +38,11 @@ export default defineConfig({
             import: './src/framework/entry.rsc.tsx',
             layer: Layers.rsc,
           },
+        },
+      },
+      output: {
+        distPath: {
+          root: 'dist/server',
         },
       },
     },
@@ -36,23 +57,11 @@ export default defineConfig({
   dev: {
     setupMiddlewares: (middlewares, serverAPI) => {
       // Custom middleware to handle RSC (React Server Components) requests
-
-      async function fetch(
-        req: IncomingMessage,
-        res: ServerResponse<IncomingMessage>,
-        id?: number,
-      ) {
-        const indexModule =
-          await serverAPI.environments.server.loadBundle<any>('index');
-        await toNodeHandler((req) => indexModule.default(req, id))(req, res);
-      }
-
       middlewares.unshift(async (req, res, next) => {
-        try {
-          await fetch(req, res);
-        } catch {
-          next();
-        }
+        const indexModule = await serverAPI.environments.server.loadBundle<{
+          default: NodeHandler;
+        }>('index');
+        await indexModule.default.nodeHandler(req, res, next);
       });
     },
   },

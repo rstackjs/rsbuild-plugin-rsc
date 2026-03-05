@@ -46,7 +46,7 @@ importers:
         version: 1.6.2(typescript@5.9.3)
       react-server-dom-rspack:
         specifier: 0.0.1-beta.1
-        version: 0.0.1-beta.1(@rspack/core@2.0.0-beta.5(@swc/helpers@0.5.18))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 0.0.1-beta.1(@rspack/core@2.0.0-beta.5(@swc/helpers@0.5.19))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       rsbuild-plugin-arethetypeswrong:
         specifier: ^0.2.0
         version: 0.2.0(@rsbuild/core@2.0.0-beta.7(core-js@3.47.0))(typescript@5.9.3)
@@ -186,6 +186,9 @@ importers:
         specifier: 0.0.1-beta.0
         version: 0.0.1-beta.0(@rspack/core@2.0.0-beta.5(@swc/helpers@0.5.19))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
     devDependencies:
+      '@rsbuild/core':
+        specifier: ^2.0.0-beta.4
+        version: 2.0.0-beta.7(core-js@3.47.0)
       '@rsbuild/plugin-react':
         specifier: ^1.4.5
         version: 1.4.5(@rsbuild/core@2.0.0-beta.7(core-js@3.47.0))
@@ -195,6 +198,9 @@ importers:
       '@types/webpack-env':
         specifier: ^1.18.8
         version: 1.18.8
+      cross-env:
+        specifier: ^10.1.0
+        version: 10.1.0
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
@@ -687,9 +693,6 @@ packages:
         optional: true
       jsdom:
         optional: true
-
-  '@swc/helpers@0.5.18':
-    resolution: {integrity: sha512-TXTnIcNJQEKwThMMqBXsZ4VGAza6bvN4pa41Rkqoio6QBKMvo+5lexeTMScGCIxtzgQJzElcvIltani+adC5PQ==}
 
   '@swc/helpers@0.5.19':
     resolution: {integrity: sha512-QamiFeIK3txNjgUTNppE6MiG3p7TdninpZu0E0PbqVh1a9FNLT2FRhisaa4NcaX52XVhA5l7Pk58Ft7Sqi/2sA==}
@@ -1691,9 +1694,9 @@ snapshots:
 
   '@rsbuild/core@1.7.3':
     dependencies:
-      '@rspack/core': 1.7.7(@swc/helpers@0.5.18)
+      '@rspack/core': 1.7.7(@swc/helpers@0.5.19)
       '@rspack/lite-tapable': 1.1.0
-      '@swc/helpers': 0.5.18
+      '@swc/helpers': 0.5.19
       core-js: 3.47.0
       jiti: 2.6.1
 
@@ -1813,19 +1816,13 @@ snapshots:
       '@rspack/binding-win32-ia32-msvc': 2.0.0-beta.5
       '@rspack/binding-win32-x64-msvc': 2.0.0-beta.5
 
-  '@rspack/core@1.7.7(@swc/helpers@0.5.18)':
+  '@rspack/core@1.7.7(@swc/helpers@0.5.19)':
     dependencies:
       '@module-federation/runtime-tools': 0.22.0
       '@rspack/binding': 1.7.7
       '@rspack/lite-tapable': 1.1.0
     optionalDependencies:
-      '@swc/helpers': 0.5.18
-
-  '@rspack/core@2.0.0-beta.5(@swc/helpers@0.5.18)':
-    dependencies:
-      '@rspack/binding': 2.0.0-beta.5
-    optionalDependencies:
-      '@swc/helpers': 0.5.18
+      '@swc/helpers': 0.5.19
 
   '@rspack/core@2.0.0-beta.5(@swc/helpers@0.5.19)':
     dependencies:
@@ -1849,10 +1846,6 @@ snapshots:
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
       - core-js
-
-  '@swc/helpers@0.5.18':
-    dependencies:
-      tslib: 2.8.1
 
   '@swc/helpers@0.5.19':
     dependencies:
@@ -2438,9 +2431,9 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  react-server-dom-rspack@0.0.1-beta.1(@rspack/core@2.0.0-beta.5(@swc/helpers@0.5.18))(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+  react-server-dom-rspack@0.0.1-beta.1(@rspack/core@2.0.0-beta.5(@swc/helpers@0.5.19))(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
-      '@rspack/core': 2.0.0-beta.5(@swc/helpers@0.5.18)
+      '@rspack/core': 2.0.0-beta.5(@swc/helpers@0.5.19)
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 
