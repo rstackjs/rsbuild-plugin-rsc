@@ -182,6 +182,7 @@ export type BuildOptions = CreateRsbuildOptions & {
 export async function build({
   catchBuildError = false,
   runServer = false,
+  preview = false,
   watch = false,
   page,
   logHelper,
@@ -212,6 +213,12 @@ export async function build({
 
   let port = 0;
   let server = { close: noop };
+
+  if (preview) {
+    const result = await rsbuild.preview();
+    port = result.port;
+    server = result.server;
+  }
 
   if (runServer) {
     port = await getRandomPort();

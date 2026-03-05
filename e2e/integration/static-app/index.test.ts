@@ -10,7 +10,7 @@ const setup = async (dev: Dev, build: Build, page: Page) => {
   const rsbuild =
     process.env.TEST_MODE === 'dev'
       ? await dev({ cwd: PROJECT_DIR })
-      : await build({ cwd: PROJECT_DIR, runServer: true });
+      : await build({ cwd: PROJECT_DIR, preview: true });
 
   await page.goto(`http://localhost:${rsbuild.port}`);
   return rsbuild;
