@@ -1,6 +1,6 @@
 {
   "name": "rsbuild-plugin-rsc",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.2",
   "description": "React server component plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -40,7 +40,7 @@
     "fs-extra": "^11.3.4",
     "playwright": "^1.58.2",
     "prebundle": "1.6.2",
-    "react-server-dom-rspack": "0.0.1-beta.1",
+    "react-server-dom-rspack": "0.0.2",
     "rsbuild-plugin-arethetypeswrong": "^0.2.0"
   },
   "peerDependencies": {
