@@ -76,15 +76,11 @@ export const pluginRSC = (
               },
             },
           },
-          dev: {
-            setupMiddlewares: (middlewares, serverAPI) => {
-              middlewares.unshift(async (req, res, next) => {
-                if (!req.url?.startsWith(SOURCE_MAP_ENDPOINT)) {
-                  return next();
-                }
-
+          server: {
+            setup: ({ server }) => {
+              server.middlewares.use(SOURCE_MAP_ENDPOINT, async (req, res) => {
                 const url = new URL(
-                  req.url,
+                  req.url!,
                   `http://${req.headers.host || 'localhost'}`,
                 );
                 const fileName = url.searchParams.get('fileName');
@@ -94,11 +90,13 @@ export const pluginRSC = (
                   return;
                 }
 
-                const environmentName =
-                  url.searchParams.get('environmentName') || 'Server';
-                const targetEnv =
-                  environmentName === 'Client' ? client : server;
-                const envAPI = serverAPI.environments[targetEnv];
+                const envName = url.searchParams.get('environmentName');
+                const rscEnvName = envName === 'Client' ? 'client' : 'server';
+                const rsbuildEnvName = pluginOptions.environments
+                  ? pluginOptions.environments[rscEnvName]
+                  : rscEnvName;
+                // @ts-expect-error
+                const envAPI = server.environments[rsbuildEnvName];
 
                 if (!envAPI) {
                   res.statusCode = 404;

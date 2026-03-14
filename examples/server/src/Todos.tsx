@@ -15,7 +15,7 @@ export async function Todos({ id }: { id?: number }) {
       <body>
         <header>
           <h1>Todos</h1>
-          <Dialog trigger="+">
+          <Dialog trigger="+" error={new Error('Failed to create todo')}>
             <h2>Add todo</h2>
             <TodoCreate />
           </Dialog>
