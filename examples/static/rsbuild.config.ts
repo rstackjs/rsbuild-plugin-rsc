@@ -55,14 +55,16 @@ export default defineConfig({
     },
   },
   server: {
-    setup: ({ server }) => {
-      // Custom middleware to handle RSC (React Server Components) requests
-      server.middlewares.use(async (req, res, next) => {
-        const indexModule = await server.environments.server.loadBundle<{
-          default: NodeHandler;
-        }>('index');
-        await indexModule.default.nodeHandler(req, res, next);
-      });
+    setup: ({ server, action }) => {
+      if (action === 'dev') {
+        // Custom middleware to handle RSC (React Server Components) requests
+        server.middlewares.use(async (req, res, next) => {
+          const indexModule = await server.environments.server.loadBundle<{
+            default: NodeHandler;
+          }>('index');
+          await indexModule.default.nodeHandler(req, res, next);
+        });
+      }
     },
   },
 });
