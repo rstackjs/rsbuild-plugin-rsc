@@ -1,0 +1,27 @@
+{
+  "name": "rsbuild-rsc-react-router",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rsbuild build",
+    "dev": "NODE_OPTIONS=\"--experimental-vm-modules\" rsbuild dev",
+    "preview": "node server.js"
+  },
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router": "^7.13.1",
+    "react-server-dom-rspack": "0.0.2"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "^2.0.0-canary-20260309140114",
+    "@rsbuild/plugin-react": "^1.4.6",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.3",
+    "@types/webpack-env": "^1.18.8",
+    "express": "^4.18.2",
+    "rsbuild-plugin-rsc": "workspace:*",
+    "srvx": "^0.11.12"
+  }
+}

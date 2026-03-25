@@ -6,6 +6,7 @@ This package provides [React Server Components](https://react.dev/reference/rsc/
 
 - **[client](./examples/client)** - Client-driven RSC integration
 - **[server](./examples/server)** - Full server-rendered application with routing and Server Actions
+- **[react-router](./examples/react-router)** - React Router RSC Data Mode
 - **[static](./examples/static)** - Static site generation
 
 Each example includes a complete setup with development and production configurations.
