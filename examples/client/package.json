@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "rsbuild build",
-    "dev": "NODE_OPTIONS=\"--experimental-vm-modules\" rsbuild dev",
+    "dev": "NODE_OPTIONS=\"--experimental-vm-modules\" rsbuild",
     "preview": "rsbuild preview"
   },
   "dependencies": {
