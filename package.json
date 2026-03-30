@@ -31,7 +31,7 @@
     "@biomejs/biome": "2.4.8",
     "@playwright/test": "^1.58.2",
     "@rsbuild/core": "^2.0.0-canary-20260309140114",
-    "@rslib/core": "0.20.0",
+    "@rslib/core": "0.20.1",
     "@rstest/core": "^0.9.4",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
