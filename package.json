@@ -28,20 +28,20 @@
     "check": "biome check --write"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.8",
+    "@biomejs/biome": "2.4.10",
     "@playwright/test": "^1.58.2",
     "@rsbuild/core": "^2.0.0-canary-20260309140114",
     "@rslib/core": "0.20.1",
-    "@rstest/core": "^0.9.4",
+    "@rstest/core": "^0.9.5",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@typescript/native-preview": "7.0.0-dev.20260322.1",
+    "@typescript/native-preview": "7.0.0-dev.20260330.1",
     "fs-extra": "^11.3.4",
     "playwright": "^1.58.2",
     "prebundle": "1.6.4",
     "react-server-dom-rspack": "0.0.2",
-    "rsbuild-plugin-arethetypeswrong": "^0.2.0"
+    "rsbuild-plugin-arethetypeswrong": "^0.3.1"
   },
   "peerDependencies": {
     "@rsbuild/core": "^2.0.0-0",
