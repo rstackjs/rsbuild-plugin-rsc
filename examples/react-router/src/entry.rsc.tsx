@@ -11,11 +11,10 @@ import {
 import { toNodeHandler } from 'srvx/node';
 import { generateHTML } from './entry.ssr';
 import { routes } from './routes/config';
+import { Layout } from './routes/root/route';
 
 async function fetchServer(request: Request) {
-  let entryJsFiles: string[];
-
-  const response = await matchRSCServerRequest({
+  return matchRSCServerRequest({
     // Provide the React Server touchpoints.
     createTemporaryReferenceSet,
     decodeAction,
@@ -27,30 +26,18 @@ async function fetchServer(request: Request) {
     routes: routes(),
     // Encode the match with the React Server implementation.
     generateResponse(match, options) {
-      if (Array.isArray(match.payload.matches)) {
-        for (const { element } of match.payload.matches) {
-          if (Array.isArray(element.type?.entryJsFiles)) {
-            entryJsFiles = element.type.entryJsFiles;
-          }
-        }
-      }
       return new Response(renderToReadableStream(match.payload, options), {
         status: match.statusCode,
         headers: match.headers,
       });
     },
   });
-
-  return {
-    response,
-    entryJsFiles,
-  };
 }
 
 async function handler(request: Request): Promise<Response> {
-  const { response, entryJsFiles } = await fetchServer(request);
+  const response = await fetchServer(request);
   return generateHTML(request, response, {
-    bootstrapScripts: entryJsFiles,
+    bootstrapScripts: Layout.entryJsFiles,
   });
 }
 
