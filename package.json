@@ -31,7 +31,7 @@
     "@biomejs/biome": "2.4.10",
     "@playwright/test": "^1.58.2",
     "@rsbuild/core": "^2.0.0-rc.0",
-    "@rslib/core": "0.20.1",
+    "@rslib/core": "0.20.3",
     "@rstest/core": "^0.9.6",
     "@types/node": "^25.5.2",
     "@types/react": "^19.2.14",
