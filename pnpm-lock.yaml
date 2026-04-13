@@ -15,11 +15,11 @@ importers:
         specifier: ^1.59.1
         version: 1.59.1
       '@rsbuild/core':
-        specifier: ^2.0.0-rc.0
-        version: 2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
+        specifier: ^2.0.0-rc.2
+        version: 2.0.0-rc.2(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
       '@rslib/core':
-        specifier: 0.20.3
-        version: 0.20.3(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@typescript/native-preview@7.0.0-dev.20260412.1)(core-js@3.47.0)(typescript@5.9.3)
+        specifier: 0.21.0
+        version: 0.21.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@typescript/native-preview@7.0.0-dev.20260412.1)(core-js@3.47.0)(typescript@5.9.3)
       '@rstest/core':
         specifier: ^0.9.7
         version: 0.9.7(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
@@ -49,7 +49,7 @@ importers:
         version: 0.0.2(@rspack/core@2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@swc/helpers@0.5.21))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       rsbuild-plugin-arethetypeswrong:
         specifier: ^0.3.1
-        version: 0.3.1(@rsbuild/core@2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0))(typescript@5.9.3)
+        version: 0.3.1(@rsbuild/core@2.0.0-rc.2(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0))(typescript@5.9.3)
 
   e2e:
     dependencies:
@@ -64,11 +64,11 @@ importers:
         specifier: workspace:*
         version: link:helper
       '@rsbuild/core':
-        specifier: ^2.0.0-rc.0
-        version: 2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
+        specifier: ^2.0.0-rc.2
+        version: 2.0.0-rc.2(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
       '@rsbuild/plugin-react':
         specifier: ^1.4.6
-        version: 1.4.6(@rsbuild/core@2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0))
+        version: 1.4.6(@rsbuild/core@2.0.0-rc.2(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0))
       '@types/express':
         specifier: ^5.0.6
         version: 5.0.6
@@ -110,7 +110,7 @@ importers:
         version: 19.2.3(react@19.2.3)
       react-server-dom-rspack:
         specifier: 0.0.2
-        version: 0.0.2(@rspack/core@2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@swc/helpers@0.5.21))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 0.0.2(@rspack/core@2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@swc/helpers@0.5.20))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       rsc-html-stream:
         specifier: ^0.0.7
         version: 0.0.7
@@ -595,6 +595,16 @@ packages:
       core-js:
         optional: true
 
+  '@rsbuild/core@2.0.0-rc.2':
+    resolution: {integrity: sha512-pZaJ8FBltCgOZEFMIixVY08GfbQ5qGyZvMX5pXyM05SQ6L0wzAoqytSAAU5oxMrcfNW6BmyRMqtq9OqG3vksAA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      core-js: '>= 3.0.0'
+    peerDependenciesMeta:
+      core-js:
+        optional: true
+
   '@rsbuild/plugin-react@1.4.5':
     resolution: {integrity: sha512-eS2sXCedgGA/7bLu8yVtn48eE/GyPbXx4Q7OcutB01IQ1D2y8WSMBys4nwfrecy19utvw4NPn4gYDy52316+vg==}
     peerDependencies:
@@ -608,8 +618,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rslib/core@0.20.3':
-    resolution: {integrity: sha512-WImc5z84oKbK0wZI5M4rk6BTK9BeYLk3lfietrR4k9e9Wk81BWR0RtPnRpDsj2+HCy8KZHCG8ZywU2QTqq36OA==}
+  '@rslib/core@0.21.0':
+    resolution: {integrity: sha512-cYNztIR9fiSV2GFb81aqfXMXYhGg2XN1fAEvNbhOVX1jqW6Xig6/LTW1sq6HNXT06Ai2sUAcx6y87nZtxOYxfg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -1396,8 +1406,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rsbuild-plugin-dts@0.20.3:
-    resolution: {integrity: sha512-WJlhX8UIlyLBC/wyFK7YK3FzQkQKGEpRbPC8m6wyKu+Db8H5sJkCIvVoBZW+7201V8dJnM2+pmn/NhHDpWqO2g==}
+  rsbuild-plugin-dts@0.21.0:
+    resolution: {integrity: sha512-bnn0pTVEAUfW3vcXYuo6US9QAO2SqQT7wjBBUer4ZtQAbberPF8soBQZWicPVC1t8mZZeVzg/PR0DHqKE7Hthw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -1811,6 +1821,17 @@ snapshots:
       - '@emnapi/runtime'
       - '@module-federation/runtime-tools'
 
+  '@rsbuild/core@2.0.0-rc.2(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)':
+    dependencies:
+      '@rspack/core': 2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@swc/helpers@0.5.21)
+      '@swc/helpers': 0.5.21
+    optionalDependencies:
+      core-js: 3.47.0
+    transitivePeerDependencies:
+      - '@emnapi/core'
+      - '@emnapi/runtime'
+      - '@module-federation/runtime-tools'
+
   '@rsbuild/plugin-react@1.4.5(@rsbuild/core@2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0))':
     dependencies:
       '@rsbuild/core': 2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
@@ -1828,10 +1849,19 @@ snapshots:
     transitivePeerDependencies:
       - webpack-hot-middleware
 
-  '@rslib/core@0.20.3(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@typescript/native-preview@7.0.0-dev.20260412.1)(core-js@3.47.0)(typescript@5.9.3)':
+  '@rsbuild/plugin-react@1.4.6(@rsbuild/core@2.0.0-rc.2(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0))':
     dependencies:
-      '@rsbuild/core': 2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
-      rsbuild-plugin-dts: 0.20.3(@rsbuild/core@2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0))(@typescript/native-preview@7.0.0-dev.20260412.1)(typescript@5.9.3)
+      '@rspack/plugin-react-refresh': 1.6.1(react-refresh@0.18.0)
+      react-refresh: 0.18.0
+    optionalDependencies:
+      '@rsbuild/core': 2.0.0-rc.2(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
+    transitivePeerDependencies:
+      - webpack-hot-middleware
+
+  '@rslib/core@0.21.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@typescript/native-preview@7.0.0-dev.20260412.1)(core-js@3.47.0)(typescript@5.9.3)':
+    dependencies:
+      '@rsbuild/core': 2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
+      rsbuild-plugin-dts: 0.21.0(@rsbuild/core@2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0))(@typescript/native-preview@7.0.0-dev.20260412.1)(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -1946,6 +1976,15 @@ snapshots:
   '@rspack/core@2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@swc/helpers@0.5.20)':
     dependencies:
       '@rspack/binding': 2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)
+    optionalDependencies:
+      '@swc/helpers': 0.5.20
+    transitivePeerDependencies:
+      - '@emnapi/core'
+      - '@emnapi/runtime'
+
+  '@rspack/core@2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@swc/helpers@0.5.20)':
+    dependencies:
+      '@rspack/binding': 2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)
     optionalDependencies:
       '@swc/helpers': 0.5.20
     transitivePeerDependencies:
@@ -2579,6 +2618,12 @@ snapshots:
     optionalDependencies:
       react-dom: 19.2.4(react@19.2.4)
 
+  react-server-dom-rspack@0.0.2(@rspack/core@2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@swc/helpers@0.5.20))(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+    dependencies:
+      '@rspack/core': 2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@swc/helpers@0.5.20)
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+
   react-server-dom-rspack@0.0.2(@rspack/core@2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@swc/helpers@0.5.21))(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
       '@rspack/core': 2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(@swc/helpers@0.5.21)
@@ -2646,16 +2691,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0))(typescript@5.9.3):
+  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.0.0-rc.2(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0))(typescript@5.9.3):
     dependencies:
       typescript: 5.9.3
     optionalDependencies:
-      '@rsbuild/core': 2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
+      '@rsbuild/core': 2.0.0-rc.2(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
 
-  rsbuild-plugin-dts@0.20.3(@rsbuild/core@2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0))(@typescript/native-preview@7.0.0-dev.20260412.1)(typescript@5.9.3):
+  rsbuild-plugin-dts@0.21.0(@rsbuild/core@2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0))(@typescript/native-preview@7.0.0-dev.20260412.1)(typescript@5.9.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.0.0-rc.0(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
+      '@rsbuild/core': 2.0.0-rc.1(@emnapi/core@1.7.1)(@emnapi/runtime@1.7.1)(core-js@3.47.0)
     optionalDependencies:
       '@typescript/native-preview': 7.0.0-dev.20260412.1
       typescript: 5.9.3

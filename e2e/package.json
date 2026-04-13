@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
-    "@rsbuild/core": "^2.0.0-rc.0",
+    "@rsbuild/core": "^2.0.0-rc.2",
     "@rsbuild/plugin-react": "^1.4.6",
     "@types/express": "^5.0.6",
     "@types/webpack-env": "^1.18.8",
