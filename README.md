@@ -1,5 +1,13 @@
 # rsbuild-plugin-rsc
 
+<p>
+  <a href="https://npmjs.com/package/rsbuild-plugin-rsc">
+   <img src="https://img.shields.io/npm/v/rsbuild-plugin-rsc?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />
+  </a>
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="license" />
+  <a href="https://npmcharts.com/compare/rsbuild-plugin-rsc?minimal=true"><img src="https://img.shields.io/npm/dm/rsbuild-plugin-rsc.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" /></a>
+</p>
+
 This package provides [React Server Components](https://react.dev/reference/rsc/server-components) (RSC) support for Rsbuild.
 
 ## Examples
