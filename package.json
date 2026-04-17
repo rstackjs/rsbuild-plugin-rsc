@@ -1,11 +1,10 @@
 {
   "name": "rsbuild-plugin-rsc",
   "version": "0.0.3",
-  "description": "React server component plugin for Rsbuild",
+  "description": "React Server Components plugin for Rsbuild",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rstackjs/rsbuild-plugin-rsc.git",
-    "directory": "packages/plugin-rsc"
+    "url": "git+https://github.com/rstackjs/rsbuild-plugin-rsc.git"
   },
   "license": "MIT",
   "type": "module",
@@ -21,9 +20,9 @@
   "scripts": {
     "build": "rslib",
     "dev": "rslib -w",
-    "test": "cd ./e2e && pnpm test:all",
     "lint": "rslint && prettier -c .",
-    "lint:write": "rslint --fix && prettier -w ."
+    "lint:write": "rslint --fix && prettier -w .",
+    "test": "cd ./e2e && pnpm test:all"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
