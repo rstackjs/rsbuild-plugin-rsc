@@ -147,14 +147,14 @@ const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(
 };
 
 export const test = base.extend<RsbuildFixture>({
-  // biome-ignore lint/correctness/noEmptyPattern: required by playwright
+  // rslint-disable-next-line no-empty-pattern
   cwd: async ({}, use, { file }) => {
     const cwd = path.dirname(file);
     await use(cwd);
   },
 
   logHelper: [
-    // biome-ignore lint/correctness/noEmptyPattern: required by playwright
+    // rslint-disable-next-line no-empty-pattern
     async ({}, use, testInfo) => {
       const logHelper = proxyConsole();
       await use(logHelper);
@@ -313,16 +313,13 @@ export const test = base.extend<RsbuildFixture>({
 export { expect };
 
 export const rspackTest = ((): typeof test => {
-  const testSkip = test.skip;
-  // @ts-expect-error
-  testSkip.describe = test.describe.skip;
-  // @ts-expect-error
-  testSkip.fail = test.describe.skip;
-  // @ts-expect-error
-  testSkip.only = test.only;
-  // @ts-expect-error
-  return testSkip as typeof test.skip & {
+  const testSkip = test.skip as typeof test.skip & {
     describe: typeof test.describe.skip;
+    fail: typeof test.describe.skip;
     only: typeof test.only;
   };
+  testSkip.describe = test.describe.skip;
+  testSkip.fail = test.describe.skip;
+  testSkip.only = test.only;
+  return testSkip;
 })();

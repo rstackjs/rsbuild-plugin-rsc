@@ -66,7 +66,9 @@ import { Nav } from '../components/Nav';
 export default function Index({ pages, currentPage }: PageProps) {
   return (
     <html lang="en">
-      <head><title>Static RSC</title></head>
+      <head>
+        <title>Static RSC</title>
+      </head>
       <body>
         <h1>This is an RSC!</h1>
         <Nav pages={pages} currentPage={currentPage} />

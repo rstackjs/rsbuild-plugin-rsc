@@ -95,7 +95,7 @@ export const pluginRSC = (
                 const rsbuildEnvName = pluginOptions.environments
                   ? pluginOptions.environments[rscEnvName]
                   : rscEnvName;
-                // @ts-expect-error
+                // @ts-expect-error -- Rsbuild injects environments on the dev server instance at runtime.
                 const envAPI = server.environments[rsbuildEnvName];
 
                 if (!envAPI) {

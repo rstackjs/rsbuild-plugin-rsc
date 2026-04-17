@@ -29,6 +29,7 @@ A server actions file. Functions exported here are marked with the `"use server"
 ### src/TodoItem.tsx and src/Dialog.tsx
 
 Client components:
+
 - `TodoItem.tsx`: A client component that renders a todo list item. It uses `useOptimistic` for instant UI feedback and calls server actions (`setTodoComplete`, `deleteTodo`) for state changes.
 - `Dialog.tsx`: A client component that renders a modal dialog using client APIs. It is used to display the create-todo form (a server component) as its children.
 
