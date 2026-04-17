@@ -1,26 +1,21 @@
 {
   "compilerOptions": {
     "lib": ["DOM", "ESNext"],
-    "jsx": "preserve",
-    "target": "ES2022",
+    "target": "ES2023",
     "types": ["node"],
     "skipLibCheck": true,
-    "useDefineForClassFields": true,
 
     /* modules */
     "module": "Node16",
     "moduleDetection": "force",
     "moduleResolution": "node16",
-    "esModuleInterop": true,
     "verbatimModuleSyntax": true,
-    "resolveJsonModule": true,
     "noUncheckedSideEffectImports": true,
 
     /* type checking */
-    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "./dist",
+    "outDir": "dist",
     "rootDir": "src",
     "composite": true,
     "isolatedDeclarations": true

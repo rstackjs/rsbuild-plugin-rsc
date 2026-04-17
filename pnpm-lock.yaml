@@ -47,6 +47,9 @@ importers:
       react-server-dom-rspack:
         specifier: 0.0.2
         version: 0.0.2(@rspack/core@2.0.0-rc.2(@swc/helpers@0.5.21))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
 
   e2e:
     dependencies:
@@ -2224,8 +2227,7 @@ snapshots:
       media-typer: 1.1.0
       mime-types: 3.0.2
 
-  typescript@6.0.3:
-    optional: true
+  typescript@6.0.3: {}
 
   undici-types@7.19.2: {}
 
