@@ -2,7 +2,7 @@
   color: #19222e;
   background: #f4efe5;
   font-family:
-    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
 }
 
 * {
@@ -56,7 +56,7 @@ a {
   border: 1px solid rgba(25, 34, 46, 0.12);
 }
 
-.app-nav a[aria-current="page"] {
+.app-nav a[aria-current='page'] {
   background: #19222e;
   color: #f8f2e8;
 }

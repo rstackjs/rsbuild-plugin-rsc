@@ -18,7 +18,7 @@ const setup = async (dev: Dev, build: Build, page: Page) => {
 };
 
 const createTodo = async (
-  page: any,
+  page: Page,
   title: string,
   description: string,
   dueDate = '2025-12-31',
@@ -45,7 +45,7 @@ const createTodo = async (
 };
 
 const waitForTodoInList = async (
-  page: any,
+  page: Page,
   title: string,
   shouldBeVisible = true,
 ) => {
@@ -57,7 +57,7 @@ const waitForTodoInList = async (
   }
 };
 
-const verifyTodoDetailPage = async (page: any) => {
+const verifyTodoDetailPage = async (page: Page) => {
   // Verify the URL changed
   expect(page.url()).toMatch(/\/todos\/\d+/);
 

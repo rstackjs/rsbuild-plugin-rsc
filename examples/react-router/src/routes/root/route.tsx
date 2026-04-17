@@ -11,7 +11,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       {
-        // @ts-expect-error
+        // @ts-expect-error -- The plugin injects entryCssFiles on server-entry components at runtime.
         // Components annotated with 'use server-entry' can access the entryCssFiles property at runtime to inject CSS resources.
         Layout.entryCssFiles.map((href) => (
           <link key={href} rel="stylesheet" href={href} precedence="default" />

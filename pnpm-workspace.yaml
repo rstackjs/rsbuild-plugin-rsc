@@ -1,3 +1,3 @@
 packages:
-  - "examples/*"
-  - "e2e/**"
+  - 'examples/*'
+  - 'e2e/**'

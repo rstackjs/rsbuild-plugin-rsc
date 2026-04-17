@@ -138,6 +138,7 @@ type PluginRSCOptions = {
 Configure module layer rules to distinguish between RSC and SSR runtimes in the server environment.
 
 The plugin uses layers to differentiate between React Server Components runtime and SSR runtime within the `server` environment:
+
 - **`rsc` layer**: Modules matching this rule will use the `react-server` export condition
 - **`ssr` layer**: Modules matching this rule will use the default export condition
 
