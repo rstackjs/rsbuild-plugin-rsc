@@ -1,6 +1,8 @@
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { ReactFormState } from 'react-dom/client';
 import {
   renderToReadableStream,
+  type ServerEntry,
   type TemporaryReferenceSet,
 } from 'react-server-dom-rspack/server.node';
 import { toNodeHandler } from 'srvx/node';
@@ -15,10 +17,11 @@ export type RscPayload = {
 async function handler(): Promise<Response> {
   let temporaryReferences: TemporaryReferenceSet | undefined;
   const rscOptions = { temporaryReferences };
+  const RscEntry = RSC as ServerEntry<typeof RSC>;
   const root = (
     <>
-      {RSC.entryCssFiles
-        ? RSC.entryCssFiles.map((href) => (
+      {RscEntry.entryCssFiles
+        ? RscEntry.entryCssFiles.map((href) => (
             <link
               key={href}
               rel="stylesheet"

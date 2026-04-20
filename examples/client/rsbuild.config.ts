@@ -1,7 +1,8 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { Layers, pluginRSC } from 'rsbuild-plugin-rsc';
-import type NodeHandler from './server';
+
+type NodeHandler = typeof import('./server/index').default;
 
 export default defineConfig({
   plugins: [pluginReact(), pluginRSC()],
@@ -25,7 +26,11 @@ export default defineConfig({
     },
   },
   server: {
-    setup: ({ server }) => {
+    setup: ({ action, server }) => {
+      if (action !== 'dev') {
+        return;
+      }
+
       // Custom middleware to handle RSC (React Server Components) requests
       server.middlewares.use(async (req, res, next) => {
         const indexModule = await server.environments.server.loadBundle<{

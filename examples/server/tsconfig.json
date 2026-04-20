@@ -16,8 +16,7 @@
 
     /* type checking */
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "typeRoots": ["./node_modules/@types", "./types"]
+    "noUnusedParameters": true
   },
-  "include": ["src"]
+  "include": ["src", "../../types/**/*.d.ts"]
 }

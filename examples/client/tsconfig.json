@@ -13,6 +13,7 @@
     "target": "ESNext",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
-    "types": ["webpack-env"]
-  }
+    "types": ["webpack-env", "node"]
+  },
+  "include": ["client", "server", "rsbuild.config.ts", "../../types/**/*.d.ts"]
 }
