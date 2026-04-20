@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build RSC plugin
+        run: pnpm build
+
       - name: Run typecheck
         run: pnpm typecheck
 
