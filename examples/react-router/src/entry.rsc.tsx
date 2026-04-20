@@ -5,8 +5,9 @@ import {
   decodeAction,
   decodeFormState,
   decodeReply,
-  loadServerAction,
+  loadServerAction as loadServerActionSync,
   renderToReadableStream,
+  type ServerEntry,
 } from 'react-server-dom-rspack/server.node';
 import { toNodeHandler } from 'srvx/node';
 import { generateHTML } from './entry.ssr';
@@ -20,7 +21,7 @@ async function fetchServer(request: Request) {
     decodeAction,
     decodeFormState,
     decodeReply,
-    loadServerAction,
+    loadServerAction: (id) => Promise.resolve(loadServerActionSync(id)),
     request,
     // The app routes.
     routes: routes(),
@@ -36,12 +37,16 @@ async function fetchServer(request: Request) {
 
 async function handler(request: Request): Promise<Response> {
   const response = await fetchServer(request);
+  const layoutEntry = Layout as ServerEntry<typeof Layout>;
   return generateHTML(request, response, {
-    bootstrapScripts: Layout.entryJsFiles,
+    bootstrapScripts: layoutEntry.entryJsFiles,
   });
 }
 
-const handleNodeRequest = toNodeHandler((request) => handler(request));
+const handleNodeRequest = toNodeHandler((request) => handler(request)) as (
+  req: IncomingMessage,
+  res: ServerResponse<IncomingMessage>,
+) => void | Promise<void>;
 
 function shouldBypassRequest(req: IncomingMessage) {
   if (!req.url) {

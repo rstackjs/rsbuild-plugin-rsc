@@ -1,5 +1,6 @@
 'use server-entry';
 
+import type { ServerEntry } from 'react-server-dom-rspack/server.node';
 import { Outlet } from 'react-router';
 import { Layout as ClientLayout } from './client';
 import './styles.css';
@@ -7,16 +8,14 @@ import './styles.css';
 export { ErrorBoundary } from './client';
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const layoutEntry = Layout as ServerEntry<typeof Layout>;
+
   // This is required for the bundler to inject the necessary CSS assets.
   return (
     <>
-      {
-        // @ts-expect-error -- The plugin injects entryCssFiles on server-entry components at runtime.
-        // Components annotated with 'use server-entry' can access the entryCssFiles property at runtime to inject CSS resources.
-        Layout.entryCssFiles.map((href) => (
-          <link key={href} rel="stylesheet" href={href} precedence="default" />
-        ))
-      }
+      {layoutEntry.entryCssFiles?.map((href) => (
+        <link key={href} rel="stylesheet" href={href} precedence="default" />
+      ))}
       <ClientLayout>{children}</ClientLayout>
     </>
   );

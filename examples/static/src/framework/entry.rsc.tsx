@@ -7,7 +7,7 @@ import { toNodeHandler } from 'srvx/node';
 import { renderHtml } from './entry.ssr';
 import { parseRenderRequest } from './request';
 import type { RscPayload } from './shared';
-import type { Page } from './ssg';
+import type { Page, PageProps } from './ssg';
 
 function getPages(): Map<string, Page> {
   const contextRequire = import.meta.webpackContext('../pages', {
@@ -43,13 +43,13 @@ async function getPageModule(route: string) {
   }
   const mod = await import(`../pages/${page.name}.tsx`);
   return {
-    Root: mod.default as ServerEntry<React.FC>,
+    Root: mod.default as ServerEntry<React.FC<PageProps>>,
     page,
   };
 }
 
 function buildRscPayload(
-  Root: ServerEntry<React.FC>,
+  Root: ServerEntry<React.FC<PageProps>>,
   page: Page,
 ): { payload: RscPayload; bootstrapScripts?: string[] } {
   const cssLinks = Root.entryCssFiles

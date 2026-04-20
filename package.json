@@ -20,6 +20,7 @@
   "scripts": {
     "build": "rslib",
     "dev": "rslib -w",
+    "typecheck": "pnpm -r exec tsc --noEmit --pretty false",
     "lint": "rslint && prettier -c .",
     "lint:write": "rslint --fix && prettier -w .",
     "test": "cd ./e2e && pnpm test:all"

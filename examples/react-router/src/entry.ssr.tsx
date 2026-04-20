@@ -5,7 +5,7 @@ import { createFromReadableStream } from 'react-server-dom-rspack/client';
 
 type PayloadPromise = Promise<RSCServerPayload> & {
   _deepestRenderedBoundaryId?: string | null;
-  formState?: Promise<unknown>;
+  formState: Promise<unknown>;
 };
 
 const encoder = new TextEncoder();
@@ -20,9 +20,7 @@ function isManifestRequest(url: URL) {
 }
 
 function escapeScript(script: string) {
-  return script
-    .replaceAll('<!--', '<\\!--')
-    .replaceAll('</script', '</\\script');
+  return script.replace(/<!--/g, '<\\!--').replace(/<\/script/g, '<\\/script');
 }
 
 function writeChunk(
