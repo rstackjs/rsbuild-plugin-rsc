@@ -32,7 +32,7 @@ export function TodoItem({
       >
         {todo.title}
       </a>
-      <button onClick={() => deleteTodo(todo.id)}>x</button>
+      <button type="button" onClick={() => deleteTodo(todo.id)}>x</button>
     </li>
   );
 }
