@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
-    "@rsbuild/core": "^2.0.0-rc.4",
+    "@rsbuild/core": "^2.0.0",
     "@rslib/core": "^0.21.2",
     "@rslint/core": "^0.4.2",
     "@rstest/core": "^0.9.8",
@@ -44,10 +44,5 @@
   "peerDependencies": {
     "@rsbuild/core": "^2.0.0-0",
     "react-server-dom-rspack": "*"
-  },
-  "pnpm": {
-    "overrides": {
-      "@rspack/core": "npm:@rspack-canary/core@2.0.0-canary-54fac0a1-20260421102724"
-    }
   }
 }
