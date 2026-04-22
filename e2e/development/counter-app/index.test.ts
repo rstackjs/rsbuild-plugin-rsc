@@ -72,8 +72,8 @@ test('should preserve state when client component is modified', async ({
     counterTsxPath,
     (content) =>
       content!.replace(
-        '<button type="button" onClick={() => setCount(count + 1)}>Count: {count}</button>',
-        '<button type="button" onClick={() => setCount(count + 1)} className="hmr-updated" data-hmr-test="true">Count: {count}</button>',
+        '<button type="button" onClick={() => setCount(count + 1)}>',
+        '<button type="button" onClick={() => setCount(count + 1)} className="hmr-updated" data-hmr-test="true">',
       ),
     async () => {
       await retry(async () => {
