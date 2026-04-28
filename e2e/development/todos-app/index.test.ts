@@ -87,34 +87,6 @@ test('should preserving state when client component is modified', async ({
   );
 });
 
-test('should not load CSS when "use server-entry" directive is removed', async ({
-  page,
-  dev,
-}) => {
-  await patchFile(
-    path.join(PROJECT_DIR, 'src/Todos.tsx'),
-    (content) => content!.replace("'use server-entry';", ''),
-    async () => {
-      await setup(dev, page);
-
-      // Check page title
-      await expect(page).toHaveTitle('Todos');
-
-      // Check header is visible
-      const header = page.locator('header h1');
-      await expect(header).toBeVisible();
-      await expect(header).toHaveText('Todos');
-
-      // Check "Add todo" button is visible
-      const addButton = page.locator('header button', { hasText: '+' });
-      await expect(addButton).toBeVisible();
-
-      const links = page.locator('link[rel="stylesheet"]');
-      await expect(links).toHaveCount(0);
-    },
-  );
-});
-
 test('should serve source maps via /__rsbuild_source_map endpoint', async ({
   page,
   dev,

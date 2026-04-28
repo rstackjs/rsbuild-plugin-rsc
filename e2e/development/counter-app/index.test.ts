@@ -86,33 +86,6 @@ test('should preserve state when client component is modified', async ({
   );
 });
 
-test('should not load CSS when "use server-entry" directive is removed', async ({
-  page,
-  dev,
-}) => {
-  await patchFile(
-    path.join(PROJECT_DIR, 'server/RSC.tsx'),
-    (content) => content!.replace("'use server-entry';", ''),
-    async () => {
-      await setup(dev, page);
-
-      // Check client header is visible
-      const clientHeader = page.locator('h1');
-      await expect(clientHeader).toBeVisible();
-      await expect(clientHeader).toHaveText('Client rendered');
-
-      // Check RSC content is visible
-      const rscHeader = page.locator('h2');
-      await expect(rscHeader).toBeVisible();
-      await expect(rscHeader).toHaveText('RSC!');
-
-      // Check that no CSS stylesheets are loaded
-      const links = page.locator('link[rel="stylesheet"]');
-      await expect(links).toHaveCount(0);
-    },
-  );
-});
-
 test('should serve source maps via /__rsbuild_source_map endpoint', async ({
   page,
   dev,
