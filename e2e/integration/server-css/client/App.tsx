@@ -1,9 +1,9 @@
 import { type ReactElement, Suspense, use } from 'react';
 import { createFromFetch } from 'react-server-dom-rspack/client.browser';
 
-function fetchRSC(): Promise<ReactElement> {
+function fetchRSC(url: string): Promise<ReactElement> {
   return createFromFetch(
-    fetch('/', {
+    fetch(url, {
       headers: {
         Accept: 'text/x-component',
       },
@@ -11,11 +11,22 @@ function fetchRSC(): Promise<ReactElement> {
   );
 }
 
-let request: Promise<ReactElement> | undefined;
+let request:
+  | {
+      url: string;
+      response: Promise<ReactElement>;
+    }
+  | undefined;
 
 function ServerContent() {
-  request ??= fetchRSC();
-  return use(request);
+  const url = `${window.location.pathname}${window.location.search}`;
+  if (!request || request.url !== url) {
+    request = {
+      url,
+      response: fetchRSC(url),
+    };
+  }
+  return use(request.response);
 }
 
 export function App() {

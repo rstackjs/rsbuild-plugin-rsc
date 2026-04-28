@@ -1,16 +1,37 @@
-import { Page1 } from './pages/Page1';
-import { Page2 } from './pages/Page2';
+import type { ReactNode } from 'react';
 import './Root.css';
+import './Shared.css';
 
-export async function Root() {
+type ServerCssPage = 'page1' | 'page2';
+
+type RootProps = {
+  activePage: ServerCssPage;
+  children: ReactNode;
+};
+
+export async function Root({ activePage, children }: RootProps) {
   return (
     <section className="server-css-root" data-testid="server-css-root">
       <h2>Server CSS root</h2>
       <p>This root stylesheet is not owned by a server-entry component.</p>
-      <div className="server-css-pages">
-        <Page1 />
-        <Page2 />
-      </div>
+      <nav aria-label="Server CSS pages">
+        <a
+          href="/?page=page1"
+          aria-current={activePage === 'page1' ? 'page' : undefined}
+        >
+          Page 1
+        </a>
+        <a
+          href="/?page=page2"
+          aria-current={activePage === 'page2' ? 'page' : undefined}
+        >
+          Page 2
+        </a>
+      </nav>
+      <p className="shared-server-css" data-testid="server-css-shared-root">
+        Shared stylesheet from root
+      </p>
+      <div className="server-css-pages">{children}</div>
     </section>
   );
 }
