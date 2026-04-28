@@ -11,7 +11,7 @@ const startApp = async (dev: Dev, build: Build) =>
     ? await dev({ cwd: PROJECT_DIR })
     : await build({ cwd: PROJECT_DIR, runServer: true });
 
-const gotoServerCssPage = (
+const gotoPage = (
   page: Page,
   port: number,
   serverCssPage: ServerCssPage,
@@ -42,7 +42,7 @@ test('should apply root CSS and server-entry page CSS by route', async ({
 }) => {
   const rsbuild = await startApp(dev, build);
 
-  await gotoServerCssPage(page, rsbuild.port, 'page1');
+  await gotoPage(page, rsbuild.port, 'page1');
   await expectPageShell(page, 'page1');
   await expect(page.getByRole('heading', { name: 'Page 1' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Page 2' })).toHaveCount(0);
@@ -69,7 +69,7 @@ test('should apply root CSS and server-entry page CSS by route', async ({
     'rgb(46, 139, 87)',
   );
 
-  await gotoServerCssPage(page, rsbuild.port, 'page2');
+  await gotoPage(page, rsbuild.port, 'page2');
   await expectPageShell(page, 'page2');
   await expect(page.getByRole('heading', { name: 'Page 2' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Page 1' })).toHaveCount(0);
