@@ -11,11 +11,8 @@ const startApp = async (dev: Dev, build: Build) =>
     ? await dev({ cwd: PROJECT_DIR })
     : await build({ cwd: PROJECT_DIR, runServer: true });
 
-const gotoPage = (
-  page: Page,
-  port: number,
-  serverCssPage: ServerCssPage,
-) => page.goto(`http://localhost:${port}/?page=${serverCssPage}`);
+const gotoPage = (page: Page, port: number, serverCssPage: ServerCssPage) =>
+  page.goto(`http://localhost:${port}/?page=${serverCssPage}`);
 
 const expectPageShell = async (page: Page, activePage: ServerCssPage) => {
   await expect(
