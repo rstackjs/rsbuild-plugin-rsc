@@ -67,8 +67,8 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5
       '@rsbuild/plugin-react':
-        specifier: ^1.4.6
-        version: 1.4.6(@rsbuild/core@2.0.5)
+        specifier: ^2.0.0
+        version: 2.0.0(@rsbuild/core@2.0.5)(@rspack/core@2.0.2(@swc/helpers@0.5.21))
       '@types/express':
         specifier: ^5.0.6
         version: 5.0.6
@@ -422,6 +422,14 @@ packages:
       '@rsbuild/core':
         optional: true
 
+  '@rsbuild/plugin-react@2.0.0':
+    resolution: {integrity: sha512-/1gzt39EGUSFEqB83g46QoOwsgv172HI18i6au1b6lgIaX4sv9stuX4ijdHbHCp8PqYEq+MyQ99jIQMO6I+etg==}
+    peerDependencies:
+      '@rsbuild/core': ^2.0.0-0
+    peerDependenciesMeta:
+      '@rsbuild/core':
+        optional: true
+
   '@rslib/core@0.21.2':
     resolution: {integrity: sha512-earnPZ/XviTgLlQ3YyVltNY4ZWqgHcHA+DSDSe+AWVQRiNRQQQgwMaCFDH1hznii/NPXjO/5eM3TFeFdV7a5AA==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -685,6 +693,15 @@ packages:
       webpack-hot-middleware: 2.x
     peerDependenciesMeta:
       webpack-hot-middleware:
+        optional: true
+
+  '@rspack/plugin-react-refresh@2.0.0':
+    resolution: {integrity: sha512-Cf6CxBStNDJbiXMc/GmsvG1G8PRlUpa0MSfWsMTI+e8npzuTN/p8nwLs3shriBZOLciqgkSZpBtPTd10BLpj1g==}
+    peerDependencies:
+      '@rspack/core': ^2.0.0-0
+      react-refresh: '>=0.10.0 <1.0.0'
+    peerDependenciesMeta:
+      '@rspack/core':
         optional: true
 
   '@rstest/core@0.9.8':
@@ -1493,6 +1510,15 @@ snapshots:
     transitivePeerDependencies:
       - webpack-hot-middleware
 
+  '@rsbuild/plugin-react@2.0.0(@rsbuild/core@2.0.5)(@rspack/core@2.0.2(@swc/helpers@0.5.21))':
+    dependencies:
+      '@rspack/plugin-react-refresh': 2.0.0(@rspack/core@2.0.2(@swc/helpers@0.5.21))(react-refresh@0.18.0)
+      react-refresh: 0.18.0
+    optionalDependencies:
+      '@rsbuild/core': 2.0.5
+    transitivePeerDependencies:
+      - '@rspack/core'
+
   '@rslib/core@0.21.2(typescript@6.0.3)':
     dependencies:
       '@rsbuild/core': 2.0.0-rc.3
@@ -1703,6 +1729,12 @@ snapshots:
     dependencies:
       error-stack-parser: 2.1.4
       react-refresh: 0.18.0
+
+  '@rspack/plugin-react-refresh@2.0.0(@rspack/core@2.0.2(@swc/helpers@0.5.21))(react-refresh@0.18.0)':
+    dependencies:
+      react-refresh: 0.18.0
+    optionalDependencies:
+      '@rspack/core': 2.0.2(@swc/helpers@0.5.21)
 
   '@rstest/core@0.9.8(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
