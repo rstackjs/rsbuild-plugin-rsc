@@ -12,8 +12,8 @@
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
-    "@rsbuild/core": "^2.0.5",
-    "@rsbuild/plugin-react": "^2.0.0",
+    "@rsbuild/core": "^2.0.6",
+    "@rsbuild/plugin-react": "^1.4.6",
     "@types/express": "^5.0.6",
     "@types/webpack-env": "^1.18.8",
     "cross-env": "^10.1.0",
@@ -22,7 +22,7 @@
     "srvx": "^0.11.15"
   },
   "dependencies": {
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
   }
 }

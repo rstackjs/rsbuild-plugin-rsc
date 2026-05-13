@@ -59,7 +59,7 @@ async function handleRequest({
       const args = await decodeReply(body, { temporaryReferences });
       const action = loadServerAction(renderRequest.actionId);
       try {
-        const data = await action.apply(null, args);
+        const data = await action(...args);
         returnValue = { ok: true, data };
       } catch (e) {
         returnValue = { ok: false, data: e };
