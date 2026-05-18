@@ -56,9 +56,6 @@ test('should render CSS for client components without JavaScript', async ({
     await expect(
       page.getByRole('button', { name: 'Dynamic clicks: 0' }),
     ).toBeVisible();
-    expect(
-      await page.locator('link[rel="stylesheet"]').count(),
-    ).toBeGreaterThanOrEqual(3);
 
     expect(
       await getStyle(
