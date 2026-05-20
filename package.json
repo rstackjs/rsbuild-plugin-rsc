@@ -1,7 +1,7 @@
 {
   "name": "rsbuild-plugin-rsc",
   "version": "0.1.0",
-  "packageManager": "pnpm@11.1.2",
+  "packageManager": "pnpm@10.33.4",
   "description": "React Server Components plugin for Rsbuild",
   "repository": {
     "type": "git",
