@@ -43,7 +43,7 @@
     "typescript": "^6.0.3"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^2.0.0-0",
+    "@rsbuild/core": "^2.0.0",
     "react-server-dom-rspack": "*"
   }
 }
