@@ -312,7 +312,7 @@ export const test = base.extend<RsbuildFixture>({
 
 export { expect };
 
-export const rspackTest = ((): typeof test => {
+export const rspackTest = (() => {
   const testSkip = test.skip as typeof test.skip & {
     describe: typeof test.describe.skip;
     fail: typeof test.describe.skip;
@@ -322,4 +322,4 @@ export const rspackTest = ((): typeof test => {
   testSkip.fail = test.describe.skip;
   testSkip.only = test.only;
   return testSkip;
-})();
+})() as unknown as typeof test;

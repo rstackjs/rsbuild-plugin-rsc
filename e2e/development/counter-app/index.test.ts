@@ -1,5 +1,6 @@
 import path from 'node:path';
-import { expect, patchFile, retry, test } from '@e2e/helper';
+import { type Dev, expect, patchFile, retry, test } from '@e2e/helper';
+import type { Page } from 'playwright';
 
 const PROJECT_DIR = path.resolve(
   import.meta.dirname,

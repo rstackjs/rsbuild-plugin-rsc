@@ -25,7 +25,11 @@ export default defineConfig({
     },
   },
   server: {
-    setup: ({ server }) => {
+    setup: ({ action, server }) => {
+      if (action !== 'dev') {
+        return;
+      }
+
       server.middlewares.use(async (req, res, next) => {
         if (!req.headers.accept?.includes('text/x-component')) {
           next();

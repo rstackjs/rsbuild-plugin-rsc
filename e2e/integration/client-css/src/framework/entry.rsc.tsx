@@ -8,6 +8,11 @@ import { toNodeHandler } from 'srvx/node';
 import { App } from '../App.tsx';
 import { renderHTML } from './entry.ssr.tsx';
 
+type NodeHandler = (
+  req: IncomingMessage,
+  res: ServerResponse<IncomingMessage>,
+) => Promise<void> | void;
+
 export type RscPayload = {
   root: React.ReactNode;
 };
@@ -56,7 +61,8 @@ async function nodeHandler(
 ) {
   const url = new URL(req.url ?? '/', 'http://localhost');
   if (req.method === 'GET' && url.pathname === '/') {
-    await toNodeHandler(handler)(req, res);
+    const fetch = toNodeHandler(handler) as NodeHandler;
+    await fetch(req, res);
     return;
   }
 

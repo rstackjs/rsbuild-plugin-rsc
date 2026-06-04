@@ -2,6 +2,9 @@
 *.log*
 *.cpuprofile
 node_modules/
+!e2e/integration/node-modules-directives/node_modules/
+!e2e/integration/node-modules-directives/node_modules/rsc-client-pkg/
+!e2e/integration/node-modules-directives/node_modules/rsc-client-pkg/**
 
 dist/
 dist-*

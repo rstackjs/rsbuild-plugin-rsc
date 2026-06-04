@@ -18,10 +18,13 @@ const checkParent = (mod: NodeJS.Module | undefined) => {
 checkParent(module);
 
 const testFolderModes = ['development', 'production'];
+const currentTestFile = testFile;
 
-const testModeFromFile = testFolderModes.find((mode) =>
-  testFile.startsWith(path.join(testsFolder, mode)),
-);
+const testModeFromFile = currentTestFile
+  ? testFolderModes.find((mode) =>
+      currentTestFile.startsWith(path.join(testsFolder, mode)),
+    )
+  : undefined;
 
 if (testModeFromFile === 'development') {
   process.env.TEST_MODE = 'dev';

@@ -50,6 +50,15 @@ export const pluginRSC = (
         },
         environments: {
           [server]: {
+            // RSC directives in dependencies need to go through swc-loader,
+            // but core-js should not be recompiled.
+            source: {
+              include: [
+                {
+                  not: /[\\/]core-js[\\/]/,
+                },
+              ],
+            },
             output: {
               target: 'node',
             },

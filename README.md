@@ -76,6 +76,13 @@ export default defineConfig({
 });
 ```
 
+When this plugin is enabled, it configures Rsbuild's `source.include` for the
+RSC environments so `swc-loader` also compiles JavaScript modules under
+`node_modules`. This is required for RSC directives in dependencies, such as
+`"use client"` and `"use server"`, to be processed correctly. Following
+Rsbuild's recommendation for compiling all `node_modules`, `core-js` is excluded
+from this extra compilation by default.
+
 ## Configuration
 
 ### environments

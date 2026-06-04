@@ -1,25 +1,16 @@
-import path from 'node:path';
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { Layers, pluginRSC } from 'rsbuild-plugin-rsc';
-
-type NodeHandler = typeof import('./src/framework/entry.rsc').default;
+import type NodeHandler from './server';
 
 export default defineConfig({
-  plugins: [
-    pluginReact(),
-    pluginRSC({
-      layers: {
-        ssr: path.join(import.meta.dirname, './src/framework/entry.ssr.tsx'),
-      },
-    }),
-  ],
+  plugins: [pluginReact(), pluginRSC()],
   environments: {
     server: {
       source: {
         entry: {
           index: {
-            import: './src/framework/entry.rsc.tsx',
+            import: './server/index.tsx',
             layer: Layers.rsc,
           },
         },
@@ -28,7 +19,7 @@ export default defineConfig({
     client: {
       source: {
         entry: {
-          index: './src/framework/entry.client.tsx',
+          index: './client/index.tsx',
         },
       },
     },
@@ -41,7 +32,7 @@ export default defineConfig({
 
       server.middlewares.use(async (req, res, next) => {
         const indexModule = await server.environments.server.loadBundle<{
-          default: NodeHandler;
+          default: typeof NodeHandler;
         }>('index');
         await indexModule.default.nodeHandler(req, res, next);
       });
