@@ -2,7 +2,8 @@ import path from 'node:path';
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { Layers, pluginRSC } from 'rsbuild-plugin-rsc';
-import type NodeHandler from './src/framework/entry.rsc';
+
+type NodeHandler = typeof import('./src/framework/entry.rsc').default;
 
 export default defineConfig({
   plugins: [
@@ -33,7 +34,11 @@ export default defineConfig({
     },
   },
   server: {
-    setup: ({ server }) => {
+    setup: ({ action, server }) => {
+      if (action !== 'dev') {
+        return;
+      }
+
       server.middlewares.use(async (req, res, next) => {
         const indexModule = await server.environments.server.loadBundle<{
           default: NodeHandler;

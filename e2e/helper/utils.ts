@@ -158,9 +158,6 @@ export const recordPluginHooks = () => {
       api.modifyRspackConfig(() => {
         hooks.push('ModifyBundlerConfig');
       });
-      api.modifyWebpackChain(() => {
-        hooks.push('ModifyBundlerConfig');
-      });
       api.modifyRsbuildConfig(() => {
         hooks.push('ModifyRsbuildConfig');
       });
@@ -205,14 +202,14 @@ export const recordPluginHooks = () => {
       api.onAfterEnvironmentCompile(() => {
         hooks.push('AfterEnvironmentCompile');
       });
-      api.onBeforeStartProdServer(() => {
-        hooks.push('BeforeStartProdServer');
+      api.onBeforeStartPreviewServer(() => {
+        hooks.push('BeforeStartPreviewServer');
       });
       api.onCloseDevServer(() => {
         hooks.push('CloseDevServer');
       });
-      api.onAfterStartProdServer(() => {
-        hooks.push('AfterStartProdServer');
+      api.onAfterStartPreviewServer(() => {
+        hooks.push('AfterStartPreviewServer');
       });
       api.onAfterDevCompile(() => {
         hooks.push('AfterDevCompile');

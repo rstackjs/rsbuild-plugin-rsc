@@ -12,6 +12,11 @@ import { Page1 } from './pages/Page1';
 import { Page2 } from './pages/Page2';
 import { Root } from './Root';
 
+type NodeHandler = (
+  req: IncomingMessage,
+  res: ServerResponse<IncomingMessage>,
+) => Promise<void> | void;
+
 type ServerCssPage = 'page1' | 'page2';
 
 function getActivePage(
@@ -64,9 +69,10 @@ export default {
     next: () => void,
   ) {
     if (req.headers.accept?.includes('text/x-component')) {
-      await toNodeHandler(() =>
+      const fetch = toNodeHandler(() =>
         handler(getActivePage(req.url, req.headers.host)),
-      )(req, res);
+      ) as NodeHandler;
+      await fetch(req, res);
       return;
     }
 
