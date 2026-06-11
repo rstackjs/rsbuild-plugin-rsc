@@ -15,6 +15,11 @@ import { toNodeHandler } from 'srvx/node';
 import { renderHTML } from './entry.ssr.tsx';
 import { parseRenderRequest } from './request.tsx';
 
+type NodeRequestHandler = (
+  req: IncomingMessage,
+  res: ServerResponse<IncomingMessage>,
+) => void | Promise<void>;
+
 // The schema of payload which is serialized into RSC stream on rsc environment
 // and deserialized on ssr/client environments.
 export type RscPayload = {
@@ -166,7 +171,11 @@ const fetch = (
   req: IncomingMessage,
   res: ServerResponse<IncomingMessage>,
   id?: number,
-) => toNodeHandler((req) => handler(req, id))(req, res);
+) =>
+  (toNodeHandler((request) => handler(request, id)) as NodeRequestHandler)(
+    req,
+    res,
+  );
 
 async function nodeHandler(
   req: IncomingMessage,

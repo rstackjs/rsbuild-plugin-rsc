@@ -8,6 +8,11 @@ import {
 import { toNodeHandler } from 'srvx/node';
 import { RSC } from './RSC';
 
+type NodeRequestHandler = (
+  req: IncomingMessage,
+  res: ServerResponse<IncomingMessage>,
+) => void | Promise<void>;
+
 export type RscPayload = {
   root: React.ReactNode;
   returnValue?: { ok: boolean; data: unknown };
@@ -42,7 +47,7 @@ async function handler(): Promise<Response> {
   });
 }
 
-const fetch = toNodeHandler(() => handler());
+const fetch = toNodeHandler(() => handler()) as NodeRequestHandler;
 
 async function nodeHandler(
   req: IncomingMessage,
