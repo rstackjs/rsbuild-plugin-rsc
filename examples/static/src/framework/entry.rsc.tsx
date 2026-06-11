@@ -9,6 +9,11 @@ import { parseRenderRequest } from './request';
 import type { RscPayload } from './shared';
 import type { Page, PageProps } from './ssg';
 
+type NodeRequestHandler = (
+  req: IncomingMessage,
+  res: ServerResponse<IncomingMessage>,
+) => void | Promise<void>;
+
 function getPages(): Map<string, Page> {
   const contextRequire = import.meta.webpackContext('../pages', {
     recursive: false,
@@ -131,8 +136,7 @@ async function handler(request: Request): Promise<Response> {
   });
 }
 
-const fetch = (req: IncomingMessage, res: ServerResponse<IncomingMessage>) =>
-  toNodeHandler(handler)(req, res);
+const fetch = toNodeHandler(handler) as NodeRequestHandler;
 
 async function nodeHandler(
   req: IncomingMessage,

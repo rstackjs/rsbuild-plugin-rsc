@@ -14,6 +14,11 @@ import { generateHTML } from './entry.ssr';
 import { routes } from './routes/config';
 import { Layout } from './routes/root/route';
 
+type NodeRequestHandler = (
+  req: IncomingMessage,
+  res: ServerResponse<IncomingMessage>,
+) => void | Promise<void>;
+
 async function fetchServer(request: Request) {
   return matchRSCServerRequest({
     // Provide the React Server touchpoints.
@@ -43,10 +48,9 @@ async function handler(request: Request): Promise<Response> {
   });
 }
 
-const handleNodeRequest = toNodeHandler((request) => handler(request)) as (
-  req: IncomingMessage,
-  res: ServerResponse<IncomingMessage>,
-) => void | Promise<void>;
+const handleNodeRequest = toNodeHandler((request) =>
+  handler(request),
+) as NodeRequestHandler;
 
 function shouldBypassRequest(req: IncomingMessage) {
   if (!req.url) {
