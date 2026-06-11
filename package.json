@@ -1,7 +1,7 @@
 {
   "name": "rsbuild-plugin-rsc",
   "version": "0.1.0",
-  "packageManager": "pnpm@11.1.2",
+  "packageManager": "pnpm@11.5.2",
   "description": "React Server Components plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -28,17 +28,17 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
-    "@rsbuild/core": "^2.0.6",
-    "@rslib/core": "^0.21.5",
+    "@rsbuild/core": "^2.0.12",
+    "@rslib/core": "^0.22.0",
     "@rslint/core": "^0.5.3",
-    "@rstest/core": "^0.10.0",
+    "@rstest/core": "^0.10.3",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^25.8.0",
-    "@types/react": "^19.2.14",
+    "@types/node": "^25.9.2",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "fs-extra": "^11.3.5",
     "playwright": "^1.60.0",
-    "prettier": "^3.8.3",
+    "prettier": "^3.8.4",
     "react-server-dom-rspack": "0.0.2",
     "typescript": "^6.0.3"
   },
