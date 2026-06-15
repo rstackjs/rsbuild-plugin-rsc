@@ -30,7 +30,7 @@
     "@playwright/test": "^1.60.0",
     "@rsbuild/core": "^2.0.12",
     "@rslib/core": "^0.22.0",
-    "@rslint/core": "^0.5.3",
+    "@rslint/core": "^0.6.1",
     "@rstest/core": "^0.10.3",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^25.9.2",
