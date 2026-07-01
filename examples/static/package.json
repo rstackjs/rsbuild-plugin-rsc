@@ -14,14 +14,14 @@
     "react-server-dom-rspack": "0.0.2"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.0.12",
-    "@rsbuild/plugin-react": "^2.0.1",
+    "@rsbuild/core": "^2.1.2",
+    "@rsbuild/plugin-react": "^2.1.0",
     "@types/react-dom": "^19.2.3",
     "@types/webpack-env": "^1.18.8",
     "cross-env": "^10.1.0",
     "fast-glob": "^3.3.3",
     "rsbuild-plugin-rsc": "workspace:*",
     "rsc-html-stream": "^0.0.7",
-    "srvx": "^0.11.16"
+    "srvx": "^0.11.18"
   }
 }

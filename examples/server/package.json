@@ -15,13 +15,13 @@
     "rsc-html-stream": "^0.0.7"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.0.12",
-    "@rsbuild/plugin-react": "^2.0.1",
+    "@rsbuild/core": "^2.1.2",
+    "@rsbuild/plugin-react": "^2.1.0",
     "@types/express": "^5.0.6",
-    "@types/node": "^25.9.2",
+    "@types/node": "^25.9.4",
     "@types/webpack-env": "^1.18.8",
     "express": "^5.2.1",
     "rsbuild-plugin-rsc": "workspace:*",
-    "srvx": "^0.11.16"
+    "srvx": "^0.11.18"
   }
 }
