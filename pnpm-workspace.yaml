@@ -4,3 +4,5 @@ packages:
 minimumReleaseAgeExclude:
   - '@rsbuild/*'
   - '@rspack/*'
+  - typescript
+  - '@typescript/*'
