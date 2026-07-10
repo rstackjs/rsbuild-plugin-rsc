@@ -14,5 +14,4 @@ export default defineConfig({
   pool: {
     maxWorkers: 1,
   },
-  testTimeout: 30_000,
 });
