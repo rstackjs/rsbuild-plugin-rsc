@@ -134,7 +134,8 @@ export const normalizeNewlines = (str: string) => str.replace(/\r\n/g, '\n');
  */
 export const expectPoll = (fn: () => boolean) => {
   return expect.poll(fn, {
-    intervals: [20, 30, 40, 50, 60, 70, 80, 90, 100],
+    interval: 20,
+    timeout: 5_000,
   });
 };
 

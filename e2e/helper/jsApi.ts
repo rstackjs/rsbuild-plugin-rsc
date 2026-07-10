@@ -231,7 +231,7 @@ export async function build({
     const app = express();
 
     // RSC handler middleware
-    const rsc = await import(distPath);
+    const rsc = await import(join(distPath, 'index.js'));
     app.use(rsc.default.nodeHandler);
 
     // Static file serving

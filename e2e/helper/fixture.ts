@@ -7,7 +7,7 @@ import {
 } from 'node:child_process';
 import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
-import base, { expect } from '@playwright/test';
+import { expect, test as base } from '@rstest/playwright';
 import fse from 'fs-extra';
 import { RSBUILD_BIN_PATH } from './constants.ts';
 import {
@@ -147,28 +147,30 @@ const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(
 };
 
 export const test = base.extend<RsbuildFixture>({
-  // rslint-disable-next-line no-empty-pattern
-  cwd: async ({}, use, { file }) => {
-    const cwd = path.dirname(file);
+  cwd: async ({ task }, use) => {
+    if (!task.filepath) {
+      throw new Error('The current test file path is unavailable.');
+    }
+    const cwd = path.dirname(task.filepath);
     await use(cwd);
   },
 
   logHelper: [
-    // rslint-disable-next-line no-empty-pattern
-    async ({}, use, testInfo) => {
+    async ({ onTestFailed, task }, use) => {
       const logHelper = proxyConsole();
-      await use(logHelper);
-      logHelper.restore();
+      onTestFailed(() => {
+        if (logHelper.logs.length) {
+          const { header, footer } = makeBox(task.name);
+          console.log(header);
+          logHelper.printCapturedLogs();
+          console.log(footer);
+        }
+      });
 
-      // If the test failed, log the console output for debugging
-      if (
-        testInfo.status !== testInfo.expectedStatus &&
-        logHelper.logs.length
-      ) {
-        const { header, footer } = makeBox(testInfo.title);
-        console.log(header);
-        logHelper.printCapturedLogs();
-        console.log(footer);
+      try {
+        await use(logHelper);
+      } finally {
+        logHelper.restore();
       }
     },
     { auto: true },
@@ -313,7 +315,7 @@ export const test = base.extend<RsbuildFixture>({
 export { expect };
 
 export const rspackTest = (() => {
-  const testSkip = test.skip as typeof test.skip & {
+  const testSkip = test.skip.bind(test) as typeof test.skip & {
     describe: typeof test.describe.skip;
     fail: typeof test.describe.skip;
     only: typeof test.only;

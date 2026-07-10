@@ -127,14 +127,22 @@ test('should mark a todo as complete and incomplete', async ({
   await page.waitForLoadState('networkidle');
 
   // Verify the state changed
-  await expect(checkbox).toBeChecked({ checked: !initialChecked });
+  if (initialChecked) {
+    await expect(checkbox).not.toBeChecked();
+  } else {
+    await expect(checkbox).toBeChecked();
+  }
 
   // Toggle back
   await checkbox.click();
   await page.waitForLoadState('networkidle');
 
   // Verify it's back to the original state
-  await expect(checkbox).toBeChecked({ checked: initialChecked });
+  if (initialChecked) {
+    await expect(checkbox).toBeChecked();
+  } else {
+    await expect(checkbox).not.toBeChecked();
+  }
 });
 
 test('should delete a todo', async ({ page, dev, build }) => {

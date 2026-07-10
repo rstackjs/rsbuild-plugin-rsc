@@ -1,7 +1,4 @@
-import { createRequire } from 'node:module';
-
-const require = createRequire(import.meta.url);
-require('./testMode.cjs');
+import './testMode.cts';
 
 export * from './constants.ts';
 export * from './fixture.ts';
