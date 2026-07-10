@@ -31,11 +31,11 @@
     "test": "cd ./e2e && pnpm test:all"
   },
   "devDependencies": {
-    "@playwright/test": "^1.61.1",
     "@rsbuild/core": "^2.1.2",
     "@rslib/core": "^0.23.1",
     "@rslint/core": "^0.6.4",
-    "@rstest/core": "^0.10.6",
+    "@rstest/core": "^0.11.1",
+    "@rstest/playwright": "^0.11.1",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^25.9.4",
     "@types/react": "^19.2.17",
