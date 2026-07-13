@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@jridgewell/trace-mapping": "^0.3.31",
-    "fast-glob": "^3.3.3",
-    "picocolors": "^1.1.1"
+    "@rstackjs/test-utils": "^0.2.0"
   }
 }

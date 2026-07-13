@@ -1,15 +1,20 @@
 import fs from 'node:fs';
-import net from 'node:net';
-import { platform } from 'node:os';
-import path, { join, sep } from 'node:path';
+import path, { join } from 'node:path';
 import { URL } from 'node:url';
 import { inspect } from 'node:util';
 import { originalPositionFor, TraceMap } from '@jridgewell/trace-mapping';
 import { logger, type RsbuildPlugin } from '@rsbuild/core';
-import glob, { type Options as GlobOptions } from 'fast-glob';
-import color from 'picocolors';
+import { getRandomPort, toPosixPath, waitFor } from '@rstackjs/test-utils';
 import type { Page } from 'playwright';
-import { expect } from './fixture.ts';
+
+export {
+  findFile,
+  getDistFiles,
+  getFileContent,
+  normalizeEol as normalizeNewlines,
+  readDirContents,
+} from '@rstackjs/test-utils';
+export { getRandomPort, toPosixPath, waitFor };
 
 /**
  * Build an URL based on the entry name and port
@@ -34,121 +39,6 @@ export const gotoPage = async (
 };
 
 export const noop = async () => {};
-
-function isPortAvailable(port: number) {
-  try {
-    const server = net.createServer().listen(port);
-    return new Promise((resolve) => {
-      server.on('listening', () => {
-        server.close();
-        resolve(true);
-      });
-      server.on('error', () => {
-        resolve(false);
-      });
-    });
-  } catch {
-    return false;
-  }
-}
-
-const portMap = new Map();
-
-/**
- * Get a random port
- * Available port ranges: 1024 ～ 65535
- * `10080` is not available on macOS CI, `> 50000` get 'permission denied' on Windows.
- * so we use `15000` ~ `45000`.
- */
-export async function getRandomPort(
-  defaultPort = Math.ceil(Math.random() * 30000) + 15000,
-) {
-  let port = defaultPort;
-  while (true) {
-    if (!portMap.get(port) && (await isPortAvailable(port))) {
-      portMap.set(port, 1);
-      return port;
-    }
-    port++;
-  }
-}
-
-// fast-glob only accepts posix path
-// https://github.com/mrmlnc/fast-glob#convertpathtopatternpath
-const convertPath = (path: string) => {
-  if (platform() === 'win32') {
-    return glob.convertPathToPattern(path);
-  }
-  return path;
-};
-
-/**
- * Read the contents of a directory and return a map of
- * file paths to their contents.
- */
-export const readDirContents = async (path: string, options?: GlobOptions) => {
-  const files = await glob(convertPath(join(path, '**/*')), options);
-  const ret: Record<string, string> = {};
-
-  await Promise.all(
-    files.map((file) =>
-      fs.promises.readFile(file, 'utf-8').then((content) => {
-        ret[file] = content;
-      }),
-    ),
-  );
-
-  return ret;
-};
-
-/**
- * Expect a file to exist
- */
-export const expectFile = (dir: string) =>
-  expectPoll(() => fs.existsSync(dir)).toBeTruthy();
-
-/**
- * Expect a file to exist and include specified content
- */
-export const expectFileWithContent = (
-  filePath: string,
-  expectedContent: string,
-) =>
-  expectPoll(() => {
-    try {
-      if (!fs.existsSync(filePath)) {
-        return false;
-      }
-      const content = fs.readFileSync(filePath, 'utf-8');
-      return content.includes(expectedContent);
-    } catch {
-      return false;
-    }
-  }).toBeTruthy();
-
-// Windows and macOS use different new lines
-export const normalizeNewlines = (str: string) => str.replace(/\r\n/g, '\n');
-
-/**
- * A faster `expect.poll`
- */
-export const expectPoll = (fn: () => boolean) => {
-  return expect.poll(fn, {
-    interval: 20,
-    timeout: 5_000,
-  });
-};
-
-/**
- * Read the contents of a dist directory and return a map of
- * file paths to their contents.
- */
-export const getDistFiles = async (distPath: string, sourceMaps = false) => {
-  return readDirContents(distPath, {
-    absolute: true,
-    ignore: !sourceMaps ? [join(distPath, '/**/*.map')] : [],
-  });
-};
 
 export const recordPluginHooks = () => {
   const hooks: string[] = [];
@@ -245,73 +135,6 @@ export async function mapSourceMapPositions(
   return originalPositions;
 }
 
-/**
- * Convert Windows backslash paths to posix forward slashes
- * @example
- * toPosixPath('foo\\bar') // returns 'foo/bar'
- */
-export const toPosixPath = (filepath: string): string => {
-  if (sep === '/') {
-    return filepath;
-  }
-  return filepath.replace(/\\/g, '/');
-};
-
-export type FileMatcher = string | RegExp | ((file: string) => boolean);
-export type FindFileOptions = {
-  /** Whether to ignore hash from filename (default: true) */
-  ignoreHash?: boolean;
-};
-
-const HASH_PATTERN = /\.[0-9a-z]{8,}(?=\.)/gi;
-
-const toMatcherFn = (matcher: FileMatcher): ((file: string) => boolean) => {
-  if (typeof matcher === 'function') {
-    return matcher;
-  }
-  if (typeof matcher === 'string') {
-    return (file: string) => file.endsWith(matcher);
-  }
-  return (file: string) => matcher.test(file);
-};
-
-/**
- * Find the first filename that matches the matcher
- * @returns The matching file path
- * @throws {Error} When no matching file is found
- */
-export const findFile = (
-  files: Record<string, string>,
-  matcher: FileMatcher,
-  options: FindFileOptions = {},
-): string => {
-  const { ignoreHash = true } = options;
-  const getComparable = (file: string) =>
-    ignoreHash ? file.replace(HASH_PATTERN, '') : file;
-  const matcherFn = toMatcherFn(matcher);
-
-  for (const file of Object.keys(files)) {
-    if (matcherFn(getComparable(file))) {
-      return file;
-    }
-  }
-
-  throw new Error(
-    `Unable to find file matching "${color.cyan(matcher.toString())}"`,
-  );
-};
-
-/**
- * Get the content of the first matching file from a files map
- * @returns The content of the matching file
- * @throws {Error} When no matching file is found
- */
-export const getFileContent = (
-  files: Record<string, string>,
-  matcher: FileMatcher,
-  options?: FindFileOptions,
-): string => files[findFile(files, matcher, options)];
-
 export const enableDebugMode = () => {
   process.env.DEBUG = 'rsbuild';
   const { level } = logger;
@@ -336,23 +159,6 @@ export const debugPrint = (...args: unknown[]) => {
 
   return process.stdout.write(`[${timestamp}] ${prettyArgs}\n`);
 };
-
-export async function waitFor(
-  millisOrCondition: number | (() => boolean),
-): Promise<void> {
-  if (typeof millisOrCondition === 'number') {
-    return new Promise((resolve) => setTimeout(resolve, millisOrCondition));
-  }
-
-  return new Promise((resolve) => {
-    const interval = setInterval(() => {
-      if (millisOrCondition()) {
-        clearInterval(interval);
-        resolve();
-      }
-    }, 100);
-  });
-}
 
 export async function retry<T>(
   fn: () => T | Promise<T>,

@@ -93,12 +93,9 @@ importers:
       '@jridgewell/trace-mapping':
         specifier: ^0.3.31
         version: 0.3.31
-      fast-glob:
-        specifier: ^3.3.3
-        version: 3.3.3
-      picocolors:
-        specifier: ^1.1.1
-        version: 1.1.1
+      '@rstackjs/test-utils':
+        specifier: ^0.2.0
+        version: 0.2.0
 
   examples/client:
     dependencies:
@@ -624,6 +621,9 @@ packages:
       '@rspack/core':
         optional: true
 
+  '@rstackjs/test-utils@0.2.0':
+    resolution: {integrity: sha512-P+LOo1WE3xYeGkHmEthyq2cIpN69k4LhiB/4UBSceD+nW9hDlhWv8MC0LTLWokZXccWl4ntcfOBjQFllkcBlPA==}
+
   '@rstest/core@0.11.1':
     resolution: {integrity: sha512-9iJnDrM/zYuHyk1//CMr/Jer2XughgN3fYagGb1YWpMLUke+E+WXlUPgACwf7OkmIB47/TttbLFK+4zwGDNOFg==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -1088,8 +1088,6 @@ packages:
   path-to-regexp@8.4.2:
     resolution: {integrity: sha512-qRcuIdP69NPm4qbACK+aDogI5CBDMi1jKe0ry5rSQJz8JVLsC7jV8XpiJjGRLLol3N+R5ihGYcrPLTno6pAdBA==}
 
-  picocolors@1.1.1:
-    resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
   picomatch@2.3.2:
     resolution: {integrity: sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==}
@@ -1576,6 +1574,8 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 2.1.3(@swc/helpers@0.5.23)
 
+  '@rstackjs/test-utils@0.2.0': {}
+
   '@rstest/core@0.11.1':
     dependencies:
       '@rsbuild/core': 2.1.5
@@ -1997,7 +1997,6 @@ snapshots:
 
   path-to-regexp@8.4.2: {}
 
-  picocolors@1.1.1: {}
 
   picomatch@2.3.2: {}
 

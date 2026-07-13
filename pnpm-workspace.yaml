@@ -7,3 +7,4 @@ minimumReleaseAgeExclude:
   - '@rstest/*'
   - typescript
   - '@typescript/*'
+  - '@rstackjs/*'

@@ -8,6 +8,7 @@ import {
 import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
 import { expect, test as base } from '@rstest/playwright';
+import { editFile as editSharedFile } from '@rstackjs/test-utils';
 import fse from 'fs-extra';
 import { RSBUILD_BIN_PATH } from './constants.ts';
 import {
@@ -249,8 +250,7 @@ export const test = base.extend<RsbuildFixture>({
       const resolvedFilename = path.isAbsolute(filename)
         ? filename
         : path.resolve(cwd, filename);
-      const code = await promises.readFile(resolvedFilename, 'utf-8');
-      return promises.writeFile(resolvedFilename, replacer(code));
+      return editSharedFile(resolvedFilename, replacer);
     };
     await use(editFile);
   },
