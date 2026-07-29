@@ -3,9 +3,14 @@ packages:
   - 'e2e/**'
 minimumReleaseAgeExclude:
   - '@rsbuild/*'
+  - '@rslib/*'
+  - '@rslint/*'
   - '@rspack/*'
-  - '@rstest/*'
-  - typescript
-  - '@typescript/*'
+  - '@rspress/*'
   - '@rstackjs/*'
+  - '@rstest/*'
+  - '@typescript/*'
   - 'react-server-dom-rspack'
+  - 'rsbuild-plugin-*'
+  - rstack
+  - typescript
