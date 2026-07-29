@@ -8,3 +8,4 @@ minimumReleaseAgeExclude:
   - typescript
   - '@typescript/*'
   - '@rstackjs/*'
+  - 'react-server-dom-rspack'
