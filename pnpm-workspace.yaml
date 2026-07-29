@@ -10,6 +10,7 @@ minimumReleaseAgeExclude:
   - '@rstackjs/*'
   - '@rstest/*'
   - '@typescript/*'
+  - 'react-server-dom-rspack'
   - 'rsbuild-plugin-*'
   - rstack
   - typescript

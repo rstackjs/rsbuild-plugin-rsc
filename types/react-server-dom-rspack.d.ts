@@ -83,15 +83,11 @@ declare module 'react-server-dom-rspack/server.node' {
     options?: RscClientOptions,
   ): Promise<unknown[]>;
 
-  export function decodeAction(
-    body: FormData,
-    serverManifest?: unknown,
-  ): Promise<() => Promise<unknown>>;
+  export function decodeAction(body: FormData): Promise<() => Promise<unknown>>;
 
   export function decodeFormState(
     actionResult: unknown,
     body: FormData,
-    serverManifest?: unknown,
   ): unknown;
 
   export function loadServerAction(actionId: string): RscServerAction;

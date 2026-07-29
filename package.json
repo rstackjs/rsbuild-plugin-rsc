@@ -43,7 +43,7 @@
     "fs-extra": "^11.3.6",
     "playwright": "^1.61.1",
     "prettier": "^3.9.4",
-    "react-server-dom-rspack": "0.0.2",
+    "react-server-dom-rspack": "0.0.3",
     "typescript": "^7.0.2"
   },
   "peerDependencies": {
