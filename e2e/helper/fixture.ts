@@ -7,7 +7,7 @@ import {
 } from 'node:child_process';
 import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
-import { expect, test as base } from '@rstest/playwright';
+import { expect, test as playwrightTest } from '@rstest/playwright';
 import { editFile as editSharedFile } from '@rstackjs/test-utils';
 import fse from 'fs-extra';
 import { RSBUILD_BIN_PATH } from './constants.ts';
@@ -19,6 +19,14 @@ import {
   type DevResult,
 } from './jsApi.ts';
 import { type ExtendedLogHelper, proxyConsole } from './logs.ts';
+
+const base = playwrightTest.extend({
+  playwright: {
+    launchOptions: {
+      channel: process.env.CI ? 'chrome' : undefined,
+    },
+  },
+});
 
 function makeBox(title: string) {
   const header = `╭────────────  Logs from: "${title}" ────────────╮`;

@@ -28,9 +28,6 @@ jobs:
       - name: Build RSC plugin
         run: pnpm build
 
-      - name: Install Playwright Browsers
-        run: pnpm exec playwright install chromium
-
       - name: Run Playwright tests
         run: pnpm test
 
