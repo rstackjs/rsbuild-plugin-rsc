@@ -1,11 +1,13 @@
 packages:
   - 'examples/*'
   - 'e2e/**'
+
 minimumReleaseAgeExclude:
   - '@rsbuild/*'
   - '@rslib/*'
   - '@rslint/*'
   - '@rspack/*'
+  - '@rspack-canary/*'
   - '@rspress/*'
   - '@rstackjs/*'
   - '@rstest/*'
@@ -14,3 +16,7 @@ minimumReleaseAgeExclude:
   - 'rsbuild-plugin-*'
   - rstack
   - typescript
+
+overrides:
+  '@rspack/core': 'npm:@rspack-canary/core@2.1.9-canary-f62dfda4-20260811032004'
+  react-server-dom-rspack: 19.3.0
