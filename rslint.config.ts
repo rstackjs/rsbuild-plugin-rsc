@@ -1,3 +1,13 @@
-import { defineConfig, ts } from '@rslint/core';
+import { defineConfig, js, ts } from '@rslint/core';
 
-export default defineConfig([ts.configs.recommended]);
+export default defineConfig([
+  js.configs.recommended,
+  ts.configs.recommended,
+  {
+    files: ['e2e/**/*', 'examples/**/*'],
+    rules: {
+      'no-unassigned-vars': 'off',
+      'no-undef': 'off',
+    },
+  },
+]);
