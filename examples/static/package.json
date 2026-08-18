@@ -11,7 +11,7 @@
   "dependencies": {
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-server-dom-rspack": "0.0.3"
+    "react-server-dom-rspack": "0.1.0"
   },
   "devDependencies": {
     "@rsbuild/core": "^2.1.2",
