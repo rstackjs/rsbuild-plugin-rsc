@@ -31,7 +31,7 @@
     "test": "cd ./e2e && pnpm test:all"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.2.0-beta.1",
+    "@rsbuild/core": "^2.2.0",
     "@rslib/core": "^0.23.1",
     "@rslint/core": "^0.8.0",
     "@rstest/core": "^0.11.1",
