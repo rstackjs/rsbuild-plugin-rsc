@@ -7,7 +7,6 @@ export default defineConfig([
     files: ['e2e/**/*', 'examples/**/*'],
     rules: {
       'no-unassigned-vars': 'off',
-      'no-undef': 'off',
     },
   },
 ]);
