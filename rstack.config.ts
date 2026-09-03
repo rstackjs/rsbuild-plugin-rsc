@@ -15,4 +15,13 @@ define.staged({
   '*.{json,jsonc,md,mdx,css,scss,less,html,yml,yaml}': 'rs fmt',
 });
 
-define.lint(({ js, ts }) => [js.configs.recommended, ts.configs.recommended]);
+define.lint(({ js, ts }) => [
+  js.configs.recommended,
+  ts.configs.recommended,
+  {
+    files: ['e2e/**/*', 'examples/**/*'],
+    rules: {
+      'no-unassigned-vars': 'off',
+    },
+  },
+]);
