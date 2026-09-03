@@ -32,5 +32,5 @@ jobs:
       - name: Run typecheck
         run: pnpm typecheck
 
-      - name: Run lint
-        run: pnpm lint
+      - name: Run check
+        run: node --run check
