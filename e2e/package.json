@@ -19,7 +19,7 @@
     "cross-env": "^10.1.0",
     "express": "^5.2.1",
     "rsbuild-plugin-rsc": "workspace:*",
-    "srvx": "^0.12.8"
+    "srvx": "^1.0.5"
   },
   "dependencies": {
     "react": "^19.3.0",
