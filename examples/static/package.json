@@ -22,6 +22,6 @@
     "fast-glob": "^3.3.3",
     "rsbuild-plugin-rsc": "workspace:*",
     "rsc-html-stream": "^0.0.8",
-    "srvx": "^0.12.8"
+    "srvx": "^1.0.5"
   }
 }

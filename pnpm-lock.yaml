@@ -76,8 +76,8 @@ importers:
         specifier: workspace:*
         version: link:..
       srvx:
-        specifier: ^0.12.8
-        version: 0.12.8
+        specifier: ^1.0.5
+        version: 1.0.5
 
   e2e/helper:
     dependencies:
@@ -122,8 +122,8 @@ importers:
         specifier: workspace:*
         version: link:../..
       srvx:
-        specifier: ^0.12.8
-        version: 0.12.8
+        specifier: ^1.0.5
+        version: 1.0.5
 
   examples/react-router:
     dependencies:
@@ -162,8 +162,8 @@ importers:
         specifier: workspace:*
         version: link:../..
       srvx:
-        specifier: ^0.12.8
-        version: 0.12.8
+        specifier: ^1.0.5
+        version: 1.0.5
 
   examples/server:
     dependencies:
@@ -202,8 +202,8 @@ importers:
         specifier: workspace:*
         version: link:../..
       srvx:
-        specifier: ^0.12.8
-        version: 0.12.8
+        specifier: ^1.0.5
+        version: 1.0.5
 
   examples/static:
     dependencies:
@@ -242,8 +242,8 @@ importers:
         specifier: ^0.0.8
         version: 0.0.8
       srvx:
-        specifier: ^0.12.8
-        version: 0.12.8
+        specifier: ^1.0.5
+        version: 1.0.5
 
 packages:
 
@@ -1323,8 +1323,8 @@ packages:
     resolution: {integrity: sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==}
     engines: {node: '>= 0.4'}
 
-  srvx@0.12.8:
-    resolution: {integrity: sha512-7k9HoDhluTlD7UJ+F+OopZoPZXB2J8f/5nW2VMLaB8KsSlZlRQxyyoX0hWEQCxB+F+3ZvB5QX3LqB6xSBRfxQQ==}
+  srvx@1.0.5:
+    resolution: {integrity: sha512-KvSKRpgPG/oaq3cyT614OQ2bAa7DynuGamivCZeoZzIUULOdbQz6wUtnnVuC4+DCx2Zglzo8v5gBYmWIWYhDxA==}
     engines: {node: '>=20.16.0'}
     hasBin: true
 
@@ -2306,7 +2306,7 @@ snapshots:
       side-channel-map: 1.0.1
       side-channel-weakmap: 1.0.2
 
-  srvx@0.12.8: {}
+  srvx@1.0.5: {}
 
   statuses@2.0.2: {}
 
