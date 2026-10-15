@@ -12,6 +12,6 @@
   },
   "dependencies": {
     "@jridgewell/trace-mapping": "^0.3.31",
-    "@rstackjs/test-utils": "^0.2.0"
+    "@rstackjs/test-utils": "^1.0.0"
   }
 }
