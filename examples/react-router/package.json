@@ -12,7 +12,7 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-router": "^7.18.4",
-    "react-server-dom-rspack": "0.1.0"
+    "react-server-dom-rspack": "0.1.1"
   },
   "devDependencies": {
     "@rsbuild/core": "^2.2.13",

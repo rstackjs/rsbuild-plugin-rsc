@@ -33,8 +33,8 @@ importers:
         specifier: ^1.64.0
         version: 1.64.0
       react-server-dom-rspack:
-        specifier: 0.1.0
-        version: 0.1.0(@rspack/core@2.2.9(@swc/helpers@0.5.23))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: 0.1.1
+        version: 0.1.1(@rspack/core@2.2.9(@swc/helpers@0.5.23))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       rstack:
         specifier: ^0.8.3
         version: 0.8.4(typescript@7.0.2)
@@ -97,8 +97,8 @@ importers:
         specifier: ^19.3.0
         version: 19.3.0(react@19.3.0)
       react-server-dom-rspack:
-        specifier: 0.1.0
-        version: 0.1.0(@rspack/core@2.2.9(@swc/helpers@0.5.23))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: 0.1.1
+        version: 0.1.1(@rspack/core@2.2.9(@swc/helpers@0.5.23))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       rsc-html-stream:
         specifier: ^0.0.8
         version: 0.0.8
@@ -137,8 +137,8 @@ importers:
         specifier: ^7.18.4
         version: 7.18.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react-server-dom-rspack:
-        specifier: 0.1.0
-        version: 0.1.0(@rspack/core@2.2.9(@swc/helpers@0.5.23))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: 0.1.1
+        version: 0.1.1(@rspack/core@2.2.9(@swc/helpers@0.5.23))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
     devDependencies:
       '@rsbuild/core':
         specifier: ^2.2.13
@@ -174,8 +174,8 @@ importers:
         specifier: ^19.3.0
         version: 19.3.0(react@19.3.0)
       react-server-dom-rspack:
-        specifier: 0.1.0
-        version: 0.1.0(@rspack/core@2.2.9(@swc/helpers@0.5.23))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: 0.1.1
+        version: 0.1.1(@rspack/core@2.2.9(@swc/helpers@0.5.23))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       rsc-html-stream:
         specifier: ^0.0.8
         version: 0.0.8
@@ -214,8 +214,8 @@ importers:
         specifier: ^19.3.0
         version: 19.3.0(react@19.3.0)
       react-server-dom-rspack:
-        specifier: 0.1.0
-        version: 0.1.0(@rspack/core@2.2.9(@swc/helpers@0.5.23))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: 0.1.1
+        version: 0.1.1(@rspack/core@2.2.9(@swc/helpers@0.5.23))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
     devDependencies:
       '@rsbuild/core':
         specifier: ^2.2.13
@@ -1230,8 +1230,8 @@ packages:
       react-dom:
         optional: true
 
-  react-server-dom-rspack@0.1.0:
-    resolution: {integrity: sha512-KqDzmxBUZEcAphwg/PnEHOBkqTJjesTmLoBygLHie1gkiLINiZuVKPRccS6qDzfdj9ccYCaJ743IDYVh0wPf/w==}
+  react-server-dom-rspack@0.1.1:
+    resolution: {integrity: sha512-pgL4M/D3jFzn/2Dv8ppgFPrauyJjP29sFCV5EjSCLI29+NHIhumkhxnkiK8x0h5SQLPqUVVZfiAu3dn7Bl1RNg==}
     engines: {node: '>=0.10.0'}
     peerDependencies:
       '@rspack/core': ^2.2.0-0
@@ -2173,7 +2173,7 @@ snapshots:
     optionalDependencies:
       react-dom: 19.3.0(react@19.3.0)
 
-  react-server-dom-rspack@0.1.0(@rspack/core@2.2.9(@swc/helpers@0.5.23))(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  react-server-dom-rspack@0.1.1(@rspack/core@2.2.9(@swc/helpers@0.5.23))(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
       '@rspack/core': 2.2.9(@swc/helpers@0.5.23)
       react: 19.3.0
