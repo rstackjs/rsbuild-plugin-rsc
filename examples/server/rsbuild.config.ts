@@ -8,7 +8,6 @@ export default defineConfig({
   plugins: [
     pluginReact(),
     pluginRSC({
-      serverHmr: true,
       layers: {
         ssr: path.join(import.meta.dirname, './src/framework/entry.ssr.tsx'),
       },

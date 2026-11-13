@@ -170,31 +170,29 @@ export const pluginRSC = (
 
     let rscPlugins: ReturnType<typeof rsc.createPlugins>;
 
-    if (pluginOptions.serverHmr) {
-      api.modifyRspackConfig((config, { environment, isDev }) => {
-        if (
-          isDev &&
-          api.context.action === 'dev' &&
-          environment.name === server &&
-          environment.config.dev.hmr &&
-          config.output.module &&
-          config.output.chunkLoading === 'import' &&
-          !config.optimization?.runtimeChunk &&
-          !Object.values(config.entry ?? {}).some(
-            (entry) =>
-              typeof entry === 'object' &&
-              (('dependOn' in entry && entry.dependOn) ||
-                ('runtime' in entry && entry.runtime)),
-          )
-        ) {
-          config.plugins.push(new ServerHotPlugin());
-        }
-      });
-    }
+    api.modifyRspackConfig((config, { environment, isDev }) => {
+      if (
+        isDev &&
+        api.context.action === 'dev' &&
+        environment.name === server &&
+        environment.config.dev.hmr &&
+        config.output.module &&
+        config.output.chunkLoading === 'import' &&
+        !config.optimization?.runtimeChunk &&
+        !Object.values(config.entry ?? {}).some(
+          (entry) =>
+            typeof entry === 'object' &&
+            (('dependOn' in entry && entry.dependOn) ||
+              ('runtime' in entry && entry.runtime)),
+        )
+      ) {
+        config.plugins.push(new ServerHotPlugin());
+      }
+    });
 
     let sendServerComponentChanges: (() => void) | undefined;
     api.onBeforeStartDevServer(({ server: devServer }) => {
-      if (pluginOptions.serverHmr && devServer.environments[server]) {
+      if (devServer.environments[server]) {
         enableServerHmr(devServer.environments[server], api.logger.warn);
       }
       sendServerComponentChanges = () =>
