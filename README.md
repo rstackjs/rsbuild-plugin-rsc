@@ -85,6 +85,18 @@ from this extra compilation by default.
 
 ## Configuration
 
+### serverHmr
+
+Set `pluginRSC({ serverHmr: true })` to apply Rspack hot updates when calling
+`server.environments.server.loadBundle(entryName)` in development. The default is
+`false`. This requires HMR and an ESM server entry with its own runtime. Both
+in-memory and on-disk output are supported.
+
+Editing a Server Component preserves unchanged modules, including React Flight
+and module-level application state. The plugin loads the current entry from
+scratch when its RSC reference manifest changes or a hot update cannot be applied. Requests already rendering during an
+update can observe newer modules on subsequent imports.
+
 ### environments
 
 - **Type**:

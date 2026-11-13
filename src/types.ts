@@ -1,6 +1,8 @@
 import type { Rspack } from '@rsbuild/core';
 
 export type PluginRSCOptions = {
+  /** Apply module-level hot updates when loading development ESM server entries. */
+  serverHmr?: boolean;
   /**
    * Configuration for customizing Rsbuild environment names.
    * Use this if you want to rename the default 'server' or 'client' environments
