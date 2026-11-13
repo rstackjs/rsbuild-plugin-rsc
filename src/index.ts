@@ -1,5 +1,6 @@
 import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
 import { rspack } from '@rsbuild/core';
+import { enableServerHmr, ServerHotPlugin } from './server-hmr.js';
 import type { PluginRSCOptions } from './types.js';
 
 export const PLUGIN_RSC_NAME = 'rsbuild:rsc';
@@ -169,10 +170,33 @@ export const pluginRSC = (
 
     let rscPlugins: ReturnType<typeof rsc.createPlugins>;
 
+    api.modifyRspackConfig((config, { environment, isDev }) => {
+      if (
+        isDev &&
+        api.context.action === 'dev' &&
+        environment.name === server &&
+        environment.config.dev.hmr &&
+        config.output.module &&
+        config.output.chunkLoading === 'import' &&
+        !config.optimization?.runtimeChunk &&
+        !Object.values(config.entry ?? {}).some(
+          (entry) =>
+            typeof entry === 'object' &&
+            (('dependOn' in entry && entry.dependOn) ||
+              ('runtime' in entry && entry.runtime)),
+        )
+      ) {
+        config.plugins.push(new ServerHotPlugin());
+      }
+    });
+
     let sendServerComponentChanges: (() => void) | undefined;
-    api.onBeforeStartDevServer(({ server }) => {
+    api.onBeforeStartDevServer(({ server: devServer }) => {
+      if (devServer.environments[server]) {
+        enableServerHmr(devServer.environments[server], api.logger.warn);
+      }
       sendServerComponentChanges = () =>
-        server.sockWrite('custom', { event: 'rsc:update' });
+        devServer.sockWrite('custom', { event: 'rsc:update' });
     });
 
     api.modifyBundlerChain(async (chain, { environment, isDev }) => {
