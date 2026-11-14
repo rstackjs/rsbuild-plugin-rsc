@@ -12,17 +12,17 @@
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
-    "@rsbuild/core": "^2.2.13",
+    "@rsbuild/core": "^2.3.2",
     "@rsbuild/plugin-react": "^2.1.1",
     "@types/express": "^5.0.6",
     "@types/webpack-env": "^1.18.8",
     "cross-env": "^10.1.0",
     "express": "^5.3.0",
     "rsbuild-plugin-rsc": "workspace:*",
-    "srvx": "^1.0.5"
+    "srvx": "^1.0.8"
   },
   "dependencies": {
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   }
 }
