@@ -15,7 +15,7 @@ const setup = async (dev: Dev, page: Page) => {
   return rsbuild;
 };
 
-test('should refetch RSC payload when server component is modified', async ({
+test('should refetch updated Server Components and preserve unchanged server state', async ({
   page,
   dev,
 }) => {
@@ -24,6 +24,16 @@ test('should refetch RSC payload when server component is modified', async ({
   // Verify initial state
   const initialHeader = page.locator('header h1');
   await expect(initialHeader).toHaveText('Todos');
+
+  // The actions module stores todos in memory. Reloading the entire bundle
+  // would serve the new heading but lose the todo.
+  const title = 'Survives a server hot update';
+  await page.click('header button:has-text("+")');
+  await page.fill('input[name="title"]', title);
+  await page.fill('textarea[name="description"]', 'Server state');
+  await page.click('dialog[open] button:has-text("Add todo")');
+  const todo = page.getByRole('link', { name: title });
+  await expect(todo).toBeVisible();
 
   // Modify the Todos.tsx file
   const todosTsxPath = path.join(PROJECT_DIR, 'src/Todos.tsx');
@@ -35,6 +45,7 @@ test('should refetch RSC payload when server component is modified', async ({
       await retry(async () => {
         const element = page.locator('header h1');
         await expect(element).toHaveText('HMR Test Title');
+        await expect(todo).toBeVisible();
       });
     },
   );
@@ -44,6 +55,44 @@ test('should refetch RSC payload when server component is modified', async ({
     const element = page.locator('header h1');
     await expect(element).toHaveText('Todos');
   });
+});
+
+test('should render after adding and removing a client reference', async ({
+  page,
+  dev,
+}) => {
+  const clientFile = path.join(PROJECT_DIR, 'src/HotClient.tsx');
+  await patchFile(
+    clientFile,
+    "'use client'; export function HotClient() { return <h1>Added client reference</h1>; }",
+    async () => {
+      const server = await dev({ cwd: PROJECT_DIR });
+      const checkHeading = (heading: string) =>
+        retry(async () => {
+          const response = await page.request.get(
+            `http://localhost:${server.port}`,
+            {
+              headers: { accept: 'text/html' },
+            },
+          );
+          expect(response.ok()).toBe(true);
+          expect(await response.text()).toContain(`<h1>${heading}</h1>`);
+        });
+      await checkHeading('Todos');
+      await patchFile(
+        path.join(PROJECT_DIR, 'src/Todos.tsx'),
+        (content) =>
+          content!
+            .replace(
+              "import './Todos.css';",
+              "import './Todos.css';\nimport { HotClient } from './HotClient';",
+            )
+            .replace('<h1>Todos</h1>', '<HotClient />'),
+        () => checkHeading('Added client reference'),
+      );
+      await checkHeading('Todos');
+    },
+  );
 });
 
 test('should preserving state when client component is modified', async ({
