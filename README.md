@@ -83,6 +83,17 @@ RSC environments so `swc-loader` also compiles JavaScript modules under
 Rsbuild's recommendation for compiling all `node_modules`, `core-js` is excluded
 from this extra compilation by default.
 
+## Server updates in development
+
+With Rsbuild HMR enabled, `server.environments.server.loadBundle(entryName)`
+automatically applies hot updates to ESM server entries with their own runtime.
+Editing a Server Component reuses React Flight and preserves state in unchanged
+modules. This works with both in-memory and on-disk output.
+
+If the RSC reference manifest changes or an update cannot be applied, the plugin
+loads the entry from scratch. A request already rendering during an update can
+observe newer modules on subsequent imports.
+
 ## Configuration
 
 ### environments
